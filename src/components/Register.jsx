@@ -9,7 +9,8 @@ const Register = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    password: ''
+    password: '',
+    role: 'member'
   });
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
@@ -35,10 +36,10 @@ const Register = () => {
       const response = await registerUser(formData);
       if (response.success) {
         setSuccess(response.message);
-        // Redirect to login after 2 seconds
+        localStorage.setItem('user', JSON.stringify(response.data));
         setTimeout(() => {
-          navigate('/login');
-        }, 2000);
+          navigate('/dashboard');
+        }, 800);
       }
     } catch (err) {
       setError(
@@ -111,10 +112,40 @@ const Register = () => {
               placeholder="Enter your password (min 6 characters)"
             />
           </div>
+          <div style={registerStyles.formGroup}>
+            <label style={registerStyles.label} htmlFor="role">
+              Role
+            </label>
+            <select
+              id="role"
+              name="role"
+              value={formData.role}
+              onChange={handleChange}
+              style={registerStyles.input}
+            >
+              <option value="member">Member</option>
+              <option value="trainer">Trainer</option>
+              <option value="admin">Admin</option>
+            </select>
+          </div>
           <button
             type="submit"
             style={registerStyles.button}
             disabled={loading}
           >
             {loading ? 'Registering...' : 'Register'}
-          </
+          </button>
+        </form>
+        <p style={registerStyles.link}>
+          Already have an account?{' '}
+          <Link to="/login" style={registerStyles.linkText}>
+            Login here
+          </Link>
+        </p>
+      </div>
+    </div>
+  );
+};
+
+export default Register;
+

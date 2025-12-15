@@ -9,15 +9,19 @@ const api = axios.create({
   }
 });
 
-// Request interceptor
+// Request interceptor to attach token
 api.interceptors.request.use(
   (config) => {
-    // You can add auth tokens here if needed
+    const stored = localStorage.getItem('user');
+    if (stored) {
+      const parsed = JSON.parse(stored);
+      if (parsed.token) {
+        config.headers.Authorization = `Bearer ${parsed.token}`;
+      }
+    }
     return config;
   },
-  (error) => {
-    return Promise.reject(error);
-  }
+  (error) => Promise.reject(error)
 );
 
 // Response interceptor

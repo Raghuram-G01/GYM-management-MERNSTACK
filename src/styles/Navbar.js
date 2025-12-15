@@ -11,6 +11,14 @@ export const navbarStyles = {
     transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
     animation: 'slideIn 0.4s ease-out'
   },
+  inner: {
+    maxWidth: '1200px',
+    width: '100%',
+    margin: '0 auto',
+    display: 'flex',
+    alignItems: 'center',
+    gap: '1rem'
+  },
   logo: {
     fontSize: '1.5rem',
     fontWeight: 'bold',
@@ -62,6 +70,18 @@ export const navbarStyles = {
     justifyContent: 'center',
     minWidth: '40px',
     height: '40px'
+  },
+  cta: {
+    padding: '0.55rem 1rem',
+    borderRadius: '999px',
+    border: 'none',
+    cursor: 'pointer',
+    fontWeight: 700,
+    transition: 'transform 0.2s ease, box-shadow 0.2s ease',
+    display: 'flex',
+    alignItems: 'center',
+    gap: '0.35rem',
+    boxShadow: '0 10px 25px rgba(0,0,0,0.12)'
   }
 };
 

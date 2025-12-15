@@ -7,47 +7,66 @@ const About = () => {
   return (
     <div style={{
       ...aboutStyles.container,
-      backgroundColor: colors.background,
-      color: colors.text,
       animation: 'fadeIn 0.5s ease-in'
     }}>
-      <h1 style={{ ...aboutStyles.title, color: colors.text }}>About Us</h1>
+      <h1 style={aboutStyles.title}>About FitMaker</h1>
+      <p style={aboutStyles.subtitle}>
+        Modern equipment, inspiring coaches, and a community-first approach — get to
+        know the people and space behind your new gym.
+      </p>
       <div style={aboutStyles.content}>
-        <div style={aboutStyles.section}>
+        <div style={{
+          ...aboutStyles.section,
+        }}>
           <img
             src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&h=400&fit=crop"
             alt="Our Gym"
             style={aboutStyles.image}
           />
-          <h2 style={aboutStyles.sectionTitle}>Our Mission</h2>
-          <p style={aboutStyles.sectionText}>
+          <h2 style={{ ...aboutStyles.sectionTitle, color: colors.text }}>Our Mission</h2>
+          <p style={{ ...aboutStyles.sectionText, color: colors.textSecondary }}>
             We are dedicated to helping you achieve your fitness goals through
             state-of-the-art equipment, expert guidance, and a supportive
             community. Our mission is to make fitness accessible to everyone,
             regardless of their fitness level or experience.
           </p>
         </div>
-        <div style={aboutStyles.section}>
+        <div style={{
+          ...aboutStyles.section,
+        }}>
           <img
             src="https://images.unsplash.com/photo-1540497077202-7c8a3999166f?w=600&h=400&fit=crop"
             alt="Training"
             style={aboutStyles.image}
           />
-          <h2 style={aboutStyles.sectionTitle}>Our Team</h2>
-          <p style={aboutStyles.sectionText}>
+          <h2 style={{ ...aboutStyles.sectionTitle, color: colors.text }}>Our Team</h2>
+          <p style={{ ...aboutStyles.sectionText, color: colors.textSecondary }}>
             Our team consists of certified fitness professionals who are
             passionate about helping you succeed. From personal trainers to
             nutrition experts, we have the knowledge and experience to guide you
             on your fitness journey.
           </p>
         </div>
-        <div style={aboutStyles.section}>
+        <div style={{
+          ...aboutStyles.section,
+        }}>
           <img
             src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=600&h=400&fit=crop"
             alt="Facilities"
             style={aboutStyles.image}
           />
-          <h2 style={aboutStyles.sectionTitle}>Our Facilities</h2>
-          <p style={aboutStyles.sectionText}>
+          <h2 style={{ ...aboutStyles.sectionTitle, color: colors.text }}>Our Facilities</h2>
+          <p style={{ ...aboutStyles.sectionText, color: colors.textSecondary }}>
             We offer a wide range of facilities including cardio equipment,
-            strength 
+            strength training machines, free weights, group fitness classes, and
+            more. Our facilities are open 24/7 to accommodate your busy
+            schedule.
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default About;
+

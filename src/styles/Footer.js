@@ -1,10 +1,11 @@
 export const footerStyles = {
   footer: {
-    backgroundColor: '#1a1a1a',
-    color: '#ffffff',
-    padding: '2rem',
+    background: 'linear-gradient(135deg, #0B1220 0%, #0F1629 40%, #F97316 140%)',
+    color: '#F9FAFB',
+    padding: '28px 24px',
     textAlign: 'center',
-    marginTop: 'auto'
+    marginTop: 'auto',
+    borderTop: '1px solid #1F2937'
   },
   content: {
     maxWidth: '1200px',
@@ -13,10 +14,10 @@ export const footerStyles = {
   text: {
     margin: '0.5rem 0',
     fontSize: '0.9rem',
-    color: '#cccccc'
+    color: '#E5E7EB'
   },
   link: {
-    color: '#ff6b6b',
+    color: '#F97316',
     textDecoration: 'none',
     '&:hover': {
       textDecoration: 'underline'

@@ -1,7 +1,7 @@
 export const profileStyles = {
   container: {
     minHeight: '100vh',
-    padding: '2rem',
+    padding: '72px 24px 48px',
     maxWidth: '1000px',
     margin: '0 auto',
     transition: 'background-color 0.3s ease, color 0.3s ease'
@@ -13,20 +13,23 @@ export const profileStyles = {
   title: {
     fontSize: '2.5rem',
     marginBottom: '0.5rem',
-    color: '#1a1a1a',
+    color: '#F9FAFB',
     fontWeight: 'bold'
   },
   subtitle: {
     fontSize: '1rem',
-    color: '#666'
+    color: '#9CA3AF'
   },
   profileCard: {
-    padding: '3rem',
+    padding: '2.6rem',
     borderRadius: '20px',
     marginBottom: '2rem',
     transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
     animation: 'fadeIn 0.6s ease-out',
-    animationFillMode: 'both'
+    animationFillMode: 'both',
+    backgroundColor: '#111827',
+    border: '1px solid #1F2937',
+    boxShadow: '0 20px 60px rgba(0,0,0,0.55)'
   },
   avatarSection: {
     textAlign: 'center',
@@ -55,8 +58,8 @@ export const profileStyles = {
     width: '45px',
     height: '45px',
     borderRadius: '50%',
-    backgroundColor: '#667eea',
-    border: '3px solid #ffffff',
+    backgroundColor: '#a855f7',
+    border: '3px solid #111827',
     color: '#ffffff',
     fontSize: '1.2rem',
     cursor: 'pointer',
@@ -69,12 +72,12 @@ export const profileStyles = {
   userName: {
     fontSize: '1.8rem',
     fontWeight: 'bold',
-    color: '#1a1a1a',
+    color: '#F9FAFB',
     marginBottom: '0.5rem'
   },
   userRole: {
     fontSize: '1rem',
-    color: '#667eea',
+    color: '#F97316',
     fontWeight: '500'
   },
   infoSection: {
@@ -83,10 +86,10 @@ export const profileStyles = {
   sectionTitle: {
     fontSize: '1.2rem',
     fontWeight: '600',
-    color: '#333',
+    color: '#F9FAFB',
     marginBottom: '1.5rem',
     paddingBottom: '0.5rem',
-    borderBottom: '1px solid #f0f0f0'
+    borderBottom: '1px solid #1F2937'
   },
   infoGrid: {
     display: 'grid',
@@ -98,7 +101,7 @@ export const profileStyles = {
   },
   label: {
     fontSize: '0.85rem',
-    color: '#666',
+    color: '#9CA3AF',
     fontWeight: '600',
     marginBottom: '0.5rem',
     display: 'block',
@@ -110,7 +113,10 @@ export const profileStyles = {
     padding: '1rem',
     borderRadius: '10px',
     fontWeight: '500',
-    transition: 'all 0.3s ease'
+    transition: 'all 0.3s ease',
+    backgroundColor: '#0B1220',
+    border: '1px solid #1F2937',
+    color: '#E5E7EB'
   },
   valueIcon: {
     marginRight: '0.5rem',
@@ -125,19 +131,19 @@ export const profileStyles = {
   statBox: {
     textAlign: 'center',
     padding: '1.5rem',
-    backgroundColor: '#f8f9fa',
+    backgroundColor: '#0B1220',
     borderRadius: '10px',
-    border: '1px solid #e9ecef'
+    border: '1px solid #1F2937'
   },
   statValue: {
     fontSize: '2rem',
     fontWeight: 'bold',
-    color: '#667eea',
+    color: '#F97316',
     marginBottom: '0.5rem'
   },
   statLabel: {
     fontSize: '0.85rem',
-    color: '#666',
+    color: '#9CA3AF',
     textTransform: 'uppercase',
     letterSpacing: '0.5px'
   },
@@ -147,7 +153,7 @@ export const profileStyles = {
     flexWrap: 'wrap',
     marginTop: '2rem',
     paddingTop: '2rem',
-    borderTop: '2px solid #f0f0f0'
+    borderTop: '2px solid #1F2937'
   },
   button: {
     padding: '0.875rem 2rem',
@@ -162,21 +168,21 @@ export const profileStyles = {
     gap: '0.5rem'
   },
   primaryButton: {
-    backgroundColor: '#667eea',
+    backgroundColor: '#F97316',
     color: '#ffffff',
     flex: 1,
     minWidth: '150px',
     justifyContent: 'center'
   },
   primaryButtonHover: {
-    backgroundColor: '#5568d3',
+    backgroundColor: '#9333ea',
     transform: 'translateY(-2px)',
     boxShadow: '0 6px 20px rgba(102, 126, 234, 0.4)'
   },
   secondaryButton: {
-    backgroundColor: '#ffffff',
-    color: '#667eea',
-    border: '2px solid #667eea',
+    backgroundColor: '#111827',
+    color: '#F97316',
+    border: '2px solid #F97316',
     flex: 1,
     minWidth: '150px',
     justifyContent: 'center'
@@ -199,7 +205,7 @@ export const profileStyles = {
   },
   '@media (max-width: 768px)': {
     container: {
-      padding: '1.5rem 1rem'
+      padding: '56px 18px 40px'
     },
     profileCard: {
       padding: '2rem 1.5rem',

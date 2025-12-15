@@ -8,7 +8,8 @@ const Login = () => {
   const { colors } = useTheme();
   const [formData, setFormData] = useState({
     email: '',
-    password: ''
+    password: '',
+    role: 'member'
   });
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
@@ -34,12 +35,10 @@ const Login = () => {
       const response = await loginUser(formData);
       if (response.success) {
         setSuccess(response.message);
-        // Store user data in localStorage
         localStorage.setItem('user', JSON.stringify(response.data));
-        // Redirect to dashboard after 1 second
         setTimeout(() => {
           navigate('/dashboard');
-        }, 1000);
+        }, 800);
       }
     } catch (err) {
       setError(
@@ -95,6 +94,22 @@ const Login = () => {
               style={loginStyles.input}
               placeholder="Enter your password"
             />
+          </div>
+          <div style={loginStyles.formGroup}>
+            <label style={loginStyles.label} htmlFor="role">
+              Login as
+            </label>
+            <select
+              id="role"
+              name="role"
+              value={formData.role}
+              onChange={handleChange}
+              style={loginStyles.input}
+            >
+              <option value="member">Member</option>
+              <option value="trainer">Trainer</option>
+              <option value="admin">Admin</option>
+            </select>
           </div>
           <button
             type="submit"

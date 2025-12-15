@@ -1,240 +1,365 @@
 export const dashboardStyles = {
-  container: {
+  page: {
     minHeight: '100vh',
-    padding: '2rem',
-    maxWidth: '1400px',
+    padding: '56px 24px 40px',
+    maxWidth: '1200px',
     margin: '0 auto',
-    transition: 'background-color 0.3s ease, color 0.3s ease'
+    backgroundColor: '#0F111A',
+    color: '#EAEFF7',
+    animation: 'fadeIn 0.4s ease'
+  },
+  loading: {
+    textAlign: 'center',
+    padding: '4rem',
+    color: '#EAEFF7',
+    fontWeight: 600
   },
   header: {
-    marginBottom: '2rem'
-  },
-  title: {
-    fontSize: '2.5rem',
-    marginBottom: '0.5rem',
-    color: '#1a1a1a',
-    fontWeight: 'bold'
-  },
-  welcome: {
-    fontSize: '1.1rem',
-    color: '#666',
-    marginBottom: '2rem'
-  },
-  stats: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-    gap: '1.5rem',
-    marginBottom: '2rem'
-  },
-  statCard: {
-    padding: '2rem',
-    borderRadius: '15px',
-    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-    cursor: 'pointer',
-    position: 'relative',
-    overflow: 'hidden',
-    animation: 'scaleIn 0.5s ease-out',
-    animationFillMode: 'both'
-  },
-  statCardHover: {
-    transform: 'translateY(-8px) scale(1.02)'
-  },
-  statIcon: {
-    fontSize: '2.5rem',
-    marginBottom: '1rem',
-    display: 'block'
-  },
-  statValue: {
-    fontSize: '3rem',
-    fontWeight: 'bold',
-    color: '#667eea',
-    marginBottom: '0.5rem',
-    lineHeight: '1'
-  },
-  statLabel: {
-    fontSize: '1rem',
-    color: '#666',
-    fontWeight: '500',
-    textTransform: 'uppercase',
-    letterSpacing: '0.5px'
-  },
-  statChange: {
-    fontSize: '0.85rem',
-    color: '#51cf66',
-    marginTop: '0.5rem'
-  },
-  contentGrid: {
-    display: 'grid',
-    gridTemplateColumns: '2fr 1fr',
-    gap: '1.5rem',
-    marginBottom: '2rem'
-  },
-  section: {
-    padding: '2rem',
-    borderRadius: '15px',
-    marginBottom: '1.5rem',
-    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-    animation: 'fadeIn 0.6s ease-out',
-    animationFillMode: 'both'
-  },
-  sectionHeader: {
     display: 'flex',
     justifyContent: 'space-between',
+    alignItems: 'flex-start',
+    gap: '16px',
+    marginBottom: '16px'
+  },
+  subhead: {
+    margin: 0,
+    color: '#8F96A8',
+    letterSpacing: '0.06em',
+    textTransform: 'uppercase',
+    fontSize: '0.9rem',
+    fontWeight: 600
+  },
+  title: {
+    margin: '4px 0',
+    fontSize: '2.2rem',
+    fontWeight: 800,
+    color: '#FFFFFF'
+  },
+  lead: {
+    margin: '0',
+    color: '#A8B0C2',
+    fontSize: '1rem'
+  },
+  headerActions: {
+    display: 'flex',
+    gap: '10px',
     alignItems: 'center',
-    marginBottom: '1.5rem',
-    paddingBottom: '1rem',
-    borderBottom: '2px solid #f0f0f0'
+    flexWrap: 'wrap'
   },
-  sectionTitle: {
-    fontSize: '1.5rem',
-    color: '#1a1a1a',
-    fontWeight: 'bold',
-    margin: 0
+  location: {
+    display: 'inline-flex',
+    alignItems: 'center',
+    gap: '6px',
+    padding: '8px 12px',
+    background: '#151926',
+    borderRadius: '12px',
+    color: '#EAEFF7',
+    fontWeight: 600
   },
-  sectionText: {
-    color: '#666',
-    lineHeight: '1.8',
-    marginBottom: '1rem'
+  locationIcon: {
+    fontSize: '1rem'
   },
-  actionButton: {
-    padding: '0.75rem 1.5rem',
-    fontSize: '0.95rem',
-    backgroundColor: '#667eea',
-    color: '#ffffff',
-    border: 'none',
-    borderRadius: '8px',
-    cursor: 'pointer',
-    transition: 'all 0.3s ease',
-    fontWeight: '500',
-    display: 'inline-block',
-    textDecoration: 'none'
-  },
-  actionButtonHover: {
-    backgroundColor: '#5568d3',
-    transform: 'translateY(-2px)',
-    boxShadow: '0 4px 12px rgba(102, 126, 234, 0.4)'
-  },
-  quickActions: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(2, 1fr)',
-    gap: '1rem',
-    marginTop: '1rem'
-  },
-  actionCard: {
-    padding: '1.5rem',
-    backgroundColor: '#f8f9fa',
-    borderRadius: '10px',
-    border: '1px solid #e9ecef',
-    transition: 'all 0.3s ease',
+  outlineButton: {
+    padding: '10px 14px',
+    borderRadius: '12px',
+    border: '1px solid #1F2432',
+    background: '#161A26',
+    color: '#EAEFF7',
+    fontWeight: 700,
     cursor: 'pointer'
   },
-  actionCardHover: {
-    backgroundColor: '#e9ecef',
-    transform: 'translateX(5px)'
+  accentButton: {
+    padding: '10px 14px',
+    borderRadius: '12px',
+    border: 'none',
+    color: '#FFFFFF',
+    fontWeight: 700,
+    cursor: 'pointer',
+    boxShadow: '0 8px 18px rgba(255, 116, 67, 0.25)',
+    background: '#FF7443'
   },
-  actionIcon: {
-    fontSize: '1.5rem',
-    marginBottom: '0.5rem'
+  statsGrid: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
+    gap: '14px',
+    marginBottom: '16px'
   },
-  actionTitle: {
-    fontSize: '1rem',
-    fontWeight: '600',
-    color: '#333',
-    marginBottom: '0.25rem'
-  },
-  actionDesc: {
-    fontSize: '0.85rem',
-    color: '#666'
-  },
-  progressSection: {
-    marginTop: '1rem'
-  },
-  progressBar: {
-    width: '100%',
-    height: '10px',
-    backgroundColor: '#e9ecef',
-    borderRadius: '10px',
-    overflow: 'hidden',
-    marginTop: '0.5rem'
-  },
-  progressFill: {
-    height: '100%',
-    backgroundColor: '#667eea',
-    borderRadius: '10px',
-    transition: 'width 0.3s ease'
-  },
-  recentActivity: {
-    listStyle: 'none',
-    padding: 0,
-    margin: 0
-  },
-  activityItem: {
-    padding: '1rem',
-    borderBottom: '1px solid #f0f0f0',
+  statCard: {
     display: 'flex',
-    alignItems: 'center',
-    gap: '1rem'
+    gap: '12px',
+    padding: '14px',
+    background: '#161A26',
+    borderRadius: '12px',
+    border: '1px solid #1F2432',
+    boxShadow: '0 6px 18px rgba(0,0,0,0.16)'
   },
-  activityIcon: {
-    fontSize: '1.5rem',
-    width: '40px',
-    height: '40px',
+  statIcon: {
+    width: '38px',
+    height: '38px',
+    borderRadius: '10px',
+    background: '#1F2432',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#f0f0f0',
-    borderRadius: '50%'
+    fontSize: '1.1rem'
   },
-  activityContent: {
-    flex: 1
+  statLabel: {
+    fontSize: '0.95rem',
+    color: '#A8B0C2',
+    marginBottom: '2px'
   },
-  activityTitle: {
-    fontWeight: '600',
-    color: '#333',
-    marginBottom: '0.25rem'
+  statValue: {
+    fontSize: '1.3rem',
+    fontWeight: 800,
+    color: '#FFFFFF',
+    marginBottom: '2px'
   },
-  activityTime: {
+  statSub: {
+    fontSize: '0.9rem',
+    color: '#8F96A8'
+  },
+  mainGrid: {
+    display: 'grid',
+    gridTemplateColumns: '2fr 1fr 1fr',
+    gap: '14px',
+    marginBottom: '14px'
+  },
+  card: {
+    background: '#161A26',
+    borderRadius: '14px',
+    border: '1px solid #1F2432',
+    padding: '16px',
+    boxShadow: '0 10px 24px rgba(0,0,0,0.18)'
+  },
+  cardLarge: {
+    background: '#161A26',
+    borderRadius: '14px',
+    border: '1px solid #1F2432',
+    padding: '16px',
+    boxShadow: '0 10px 24px rgba(0,0,0,0.18)',
+    gridColumn: 'span 1'
+  },
+  sectionHeader: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: '12px'
+  },
+  sectionTitle: {
+    margin: 0,
+    fontSize: '1.1rem',
+    fontWeight: 700,
+    color: '#FFFFFF'
+  },
+  sectionHint: {
+    color: '#8F96A8',
+    fontSize: '0.9rem'
+  },
+  chartRow: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(7, 1fr)',
+    gap: '10px',
+    alignItems: 'end',
+    height: '180px'
+  },
+  chartBarWrap: {
+    textAlign: 'center'
+  },
+  chartBar: {
+    width: '100%',
+    minHeight: '8px',
+    borderRadius: '10px'
+  },
+  chartLabel: {
+    display: 'block',
+    marginTop: '6px',
     fontSize: '0.85rem',
-    color: '#999'
+    color: '#8F96A8'
   },
-  '@media (max-width: 968px)': {
-    contentGrid: {
-      gridTemplateColumns: '1fr'
+  radialWrap: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    gap: '10px'
+  },
+  radialOuter: {
+    width: '160px',
+    height: '160px',
+    borderRadius: '50%',
+    background: 'conic-gradient(#FF7443 0deg 288deg, #1F2432 288deg 360deg)',
+    display: 'grid',
+    placeItems: 'center'
+  },
+  radialInner: {
+    width: '110px',
+    height: '110px',
+    borderRadius: '50%',
+    background: '#0F111A',
+    display: 'grid',
+    placeItems: 'center',
+    boxShadow: 'inset 0 0 0 1px #1F2432'
+  },
+  radialValue: {
+    fontWeight: 800,
+    fontSize: '1.4rem',
+    color: '#FFFFFF'
+  },
+  radialText: {
+    fontSize: '0.9rem',
+    color: '#8F96A8'
+  },
+  helperText: {
+    textAlign: 'center',
+    color: '#A8B0C2',
+    fontSize: '0.95rem',
+    margin: 0
+  },
+  goalList: {
+    listStyle: 'none',
+    padding: 0,
+    margin: 0,
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '10px'
+  },
+  goalItem: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: '10px',
+    borderRadius: '12px',
+    background: '#141826',
+    border: '1px solid #1F2432'
+  },
+  goalTitle: {
+    fontWeight: 700,
+    color: '#FFFFFF'
+  },
+  goalMeta: {
+    color: '#8F96A8',
+    fontSize: '0.9rem'
+  },
+  goalTag: {
+    padding: '6px 10px',
+    borderRadius: '999px',
+    background: 'rgba(255,116,67,0.15)',
+    color: '#FF7443',
+    fontWeight: 700,
+    fontSize: '0.85rem'
+  },
+  lowerGrid: {
+    display: 'grid',
+    gridTemplateColumns: '1.2fr 1fr 1fr',
+    gap: '14px'
+  },
+  trainerGrid: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+    gap: '12px'
+  },
+  trainerCard: {
+    display: 'flex',
+    gap: '10px',
+    padding: '10px',
+    borderRadius: '12px',
+    border: '1px solid #1F2432',
+    background: '#141826',
+    alignItems: 'center'
+  },
+  trainerAvatar: {
+    width: '50px',
+    height: '50px',
+    borderRadius: '12px',
+    objectFit: 'cover'
+  },
+  trainerName: {
+    fontWeight: 700,
+    color: '#FFFFFF'
+  },
+  trainerRole: {
+    color: '#8F96A8',
+    fontSize: '0.9rem'
+  },
+  dietCard: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    gap: '10px',
+    padding: '12px',
+    borderRadius: '12px',
+    background: '#141826',
+    border: '1px solid #1F2432'
+  },
+  dietTitle: {
+    fontWeight: 700,
+    color: '#FFFFFF'
+  },
+  dietText: {
+    color: '#8F96A8',
+    fontSize: '0.95rem'
+  },
+  scheduleList: {
+    listStyle: 'none',
+    padding: 0,
+    margin: 0,
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '10px'
+  },
+  scheduleItem: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: '10px 12px',
+    borderRadius: '12px',
+    background: '#141826',
+    border: '1px solid #1F2432'
+  },
+  scheduleTitle: {
+    fontWeight: 700,
+    color: '#FFFFFF'
+  },
+  scheduleTime: {
+    color: '#8F96A8',
+    fontSize: '0.9rem'
+  },
+  scheduleTag: {
+    padding: '6px 10px',
+    borderRadius: '999px',
+    background: 'rgba(68,89,255,0.2)',
+    color: '#AFC2FF',
+    fontWeight: 700,
+    fontSize: '0.85rem'
+  },
+  '@media (max-width: 1024px)': {
+    mainGrid: {
+      gridTemplateColumns: '1fr 1fr'
     },
-    quickActions: {
-      gridTemplateColumns: '1fr'
+    lowerGrid: {
+      gridTemplateColumns: '1fr 1fr'
     }
   },
   '@media (max-width: 768px)': {
-    container: {
-      padding: '1rem'
+    page: {
+      padding: '56px 18px 36px'
     },
-    stats: {
-      gridTemplateColumns: '1fr',
-      gap: '1rem'
+    header: {
+      flexDirection: 'column',
+      alignItems: 'flex-start'
     },
-    statCard: {
-      padding: '1.5rem'
+    headerActions: {
+      width: '100%'
     },
-    title: {
-      fontSize: '2rem'
-    },
-    section: {
-      padding: '1.5rem'
-    },
-    actionCard: {
-      padding: '1rem'
-    }
-  },
-  '@media (max-width: 480px)': {
-    container: {
-      padding: '0.75rem'
-    },
-    stats: {
+    mainGrid: {
       gridTemplateColumns: '1fr'
     },
-    statValue: {
-      fontSize: '2rem'
+    lowerGrid: {
+      gridTemplateColumns: '1fr'
+    }
+  },
+  '@media (max-width: 520px)': {
+    statsGrid: {
+      gridTemplateColumns: '1fr'
     }
   }
 };

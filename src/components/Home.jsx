@@ -4,70 +4,354 @@ import { homeStyles } from '../styles/Home.js';
 
 const Home = () => {
   const { colors } = useTheme();
-  
+  const user = JSON.parse(localStorage.getItem('user') || 'null');
+
   return (
-    <div style={{
-      ...homeStyles.container,
-      backgroundColor: colors.background,
-      color: colors.text,
-      animation: 'fadeIn 0.5s ease-in'
-    }}>
-      <section style={homeStyles.hero}>
-        <h1 style={homeStyles.heroTitle}>Transform Your Body</h1>
-        <p style={homeStyles.heroSubtitle}>
-          Join thousands of members achieving their fitness goals
-        </p>
-        <Link to="/register" style={homeStyles.ctaButton}>
-          Get Started Today
-        </Link>
+    <div
+      style={{
+        ...homeStyles.page,
+        backgroundColor: '#1D1D1D',
+        color: colors.text
+      }}
+    >
+      {/* Hero Section */}
+      <section style={homeStyles.heroSection}>
+        <div style={homeStyles.heroContent}>
+          <p style={homeStyles.heroBadge}>FITMAKER GYM • PREMIUM FITNESS CLUB</p>
+          <h1 style={homeStyles.heroTitle}>
+            Make your <span style={homeStyles.heroHighlight}>body</span> shape.
+          </h1>
+          <p style={homeStyles.heroSubtitle}>
+            Build your best version with our professional trainers, modern equipment,
+            and community that keeps you motivated every single day.
+          </p>
+          <div style={homeStyles.heroActions}>
+            <Link
+              to={user ? "/dashboard" : "/register"}
+              style={{
+                ...homeStyles.primaryButton,
+                backgroundColor: colors.primary,
+                boxShadow: `0 16px 40px ${colors.shadow}`
+              }}
+            >
+              {user ? "Go to Dashboard" : "Get Started"}
+            </Link>
+            <Link to="/about" style={homeStyles.secondaryButton}>
+              View Programs
+            </Link>
+          </div>
+          <div style={homeStyles.heroStats}>
+            <div style={homeStyles.statItem}>
+              <span style={homeStyles.statNumber}>30k+</span>
+              <span style={homeStyles.statLabel}>Active Members</span>
+            </div>
+            <div style={homeStyles.statItem}>
+              <span style={homeStyles.statNumber}>120+</span>
+              <span style={homeStyles.statLabel}>Professional Trainers</span>
+            </div>
+            <div style={homeStyles.statItem}>
+              <span style={homeStyles.statNumber}>24/7</span>
+              <span style={homeStyles.statLabel}>Open Everyday</span>
+            </div>
+          </div>
+        </div>
+        <div style={homeStyles.heroVisual}>
+          <div style={homeStyles.heroImageWrapper}>
+            <img
+              src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=900&q=80"
+              alt="Athlete training at FitMaker gym"
+              style={homeStyles.heroImage}
+            />
+            <div style={homeStyles.heroFloatingCard}>
+              <p style={homeStyles.floatingTitle}>Today’s Session</p>
+              <p style={homeStyles.floatingValue}>Full Body • 60 min</p>
+            </div>
+          </div>
+        </div>
       </section>
 
-      <section style={homeStyles.features}>
-        <h2 style={{ ...homeStyles.featuresTitle, color: colors.text }}>Why Choose Us?</h2>
-        <div style={homeStyles.featuresGrid}>
-          <div style={{
-            ...homeStyles.featureCard,
-            backgroundColor: colors.surface,
-            border: `1px solid ${colors.border}`,
-            boxShadow: `0 4px 6px ${colors.shadow}`
-          }}>
-            <img
-              src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=300&fit=crop"
-              alt="Modern Equipment"
-              style={homeStyles.featureImage}
-            />
-            <h3 style={{ ...homeStyles.featureTitle, color: colors.text }}>Modern Equipment</h3>
-            <p style={{ ...homeStyles.featureText, color: colors.textSecondary }}>
-              State-of-the-art fitness equipment to help you achieve your goals
+      {/* Our Services */}
+      <section style={homeStyles.section}>
+        <header style={homeStyles.sectionHeader}>
+          <p style={homeStyles.sectionBadge}>Our Services</p>
+          <h2 style={homeStyles.sectionTitle}>Built for every fitness journey.</h2>
+          <p style={homeStyles.sectionSubtitle}>
+            Whether you’re just starting or a pro athlete, FitMaker has the perfect
+            program to match your goals.
+          </p>
+        </header>
+        <div style={homeStyles.cardGrid}>
+          {services.map((service) => (
+            <article key={service.title} style={homeStyles.serviceCard}>
+              <div style={homeStyles.serviceIcon}>{service.icon}</div>
+              <h3 style={homeStyles.cardTitle}>{service.title}</h3>
+              <p style={homeStyles.cardText}>{service.description}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      {/* Our Plans */}
+      <section style={homeStyles.section}>
+        <header style={homeStyles.sectionHeader}>
+          <p style={homeStyles.sectionBadge}>Our Plans</p>
+          <h2 style={homeStyles.sectionTitle}>Choose the right membership.</h2>
+        </header>
+        <div style={homeStyles.pricingGrid}>
+          {plans.map((plan) => (
+            <article
+              key={plan.name}
+              style={{
+                ...homeStyles.pricingCard,
+                ...(plan.popular ? homeStyles.pricingCardPopular : {})
+              }}
+            >
+              {plan.popular && <span style={homeStyles.popularTag}>Most Popular</span>}
+              <h3 style={homeStyles.cardTitle}>{plan.name}</h3>
+              <p style={homeStyles.pricingPrice}>
+                ${plan.price}
+                <span style={homeStyles.pricingPeriod}>/month</span>
+              </p>
+              <ul style={homeStyles.pricingList}>
+                {plan.features.map((item) => (
+                  <li key={item} style={homeStyles.pricingItem}>
+                    <span style={homeStyles.checkIcon}>✔</span>
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+              <Link
+                to={user ? "/payments" : "/login"}
+                style={plan.popular ? homeStyles.pricingButtonPrimary : homeStyles.pricingButton}
+              >
+                {user ? "Make Payment" : "Join now"}
+              </Link>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      {/* Trainers */}
+      <section style={homeStyles.section}>
+        <header style={homeStyles.sectionHeader}>
+          <p style={homeStyles.sectionBadge}>Our Trainers</p>
+          <h2 style={homeStyles.sectionTitle}>Meet your new fitness team.</h2>
+        </header>
+        <div style={homeStyles.cardGrid}>
+          {trainers.map((trainer) => (
+            <article key={trainer.name} style={homeStyles.trainerCard}>
+              <img
+                src={trainer.image}
+                alt={trainer.name}
+                style={homeStyles.trainerImage}
+              />
+              <div style={homeStyles.trainerInfo}>
+                <h3 style={homeStyles.cardTitle}>{trainer.name}</h3>
+                <p style={homeStyles.trainerRole}>{trainer.role}</p>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      {/* Testimonials */}
+      <section style={homeStyles.section}>
+        <header style={homeStyles.sectionHeader}>
+          <p style={homeStyles.sectionBadge}>Testimonials</p>
+          <h2 style={homeStyles.sectionTitle}>Members love FitMaker.</h2>
+        </header>
+        <div style={homeStyles.testimonialRow}>
+          {testimonials.map((testimonial) => (
+            <article key={testimonial.name} style={homeStyles.testimonialCard}>
+              <p style={homeStyles.testimonialQuote}>"{testimonial.quote}"</p>
+              <p style={homeStyles.testimonialName}>{testimonial.name}</p>
+              <p style={homeStyles.testimonialMeta}>{testimonial.meta}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      {/* Blog */}
+      <section style={homeStyles.section}>
+        <header style={homeStyles.sectionHeader}>
+          <p style={homeStyles.sectionBadge}>Blog Post</p>
+          <h2 style={homeStyles.sectionTitle}>Train smarter, not harder.</h2>
+        </header>
+        <div style={homeStyles.cardGrid}>
+          {blogs.map((post) => (
+            <article key={post.title} style={homeStyles.blogCard}>
+              <img
+                src={post.image}
+                alt={post.title}
+                style={homeStyles.blogImage}
+              />
+              <div style={homeStyles.blogBody}>
+                <p style={homeStyles.blogMeta}>{post.category}</p>
+                <h3 style={homeStyles.cardTitle}>{post.title}</h3>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      {/* FAQ */}
+      <section style={homeStyles.section}>
+        <header style={homeStyles.sectionHeader}>
+          <p style={homeStyles.sectionBadge}>FAQ</p>
+          <h2 style={homeStyles.sectionTitle}>Frequently asked questions.</h2>
+        </header>
+        <div style={homeStyles.faqGrid}>
+          {faqs.map((faq) => (
+            <details key={faq.q} style={homeStyles.faqItem}>
+              <summary style={homeStyles.faqQuestion}>{faq.q}</summary>
+              <p style={homeStyles.faqAnswer}>{faq.a}</p>
+            </details>
+          ))}
+        </div>
+      </section>
+
+      {/* Footer CTA */}
+      <section style={homeStyles.footerCta}>
+        <div style={homeStyles.footerCtaInner}>
+          <div>
+            <p style={homeStyles.sectionBadge}>Start now</p>
+            <h2 style={homeStyles.footerCtaTitle}>Ready to join FitMaker?</h2>
+            <p style={homeStyles.footerCtaSubtitle}>
+              Create your account in minutes and get instant access to our classes,
+              trainers, and community.
             </p>
           </div>
-          <div style={homeStyles.featureCard}>
-            <img
-              src="https://images.unsplash.com/photo-1540497077202-7c8a3999166f?w=400&h=300&fit=crop"
-              alt="Expert Trainers"
-              style={homeStyles.featureImage}
-            />
-            <h3 style={homeStyles.featureTitle}>Expert Trainers</h3>
-            <p style={homeStyles.featureText}>
-              Certified professionals ready to guide you on your fitness journey
-            </p>
-          </div>
-          <div style={homeStyles.featureCard}>
-            <img
-              src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=400&h=300&fit=crop"
-              alt="Flexible Schedule"
-              style={homeStyles.featureImage}
-            />
-            <h3 style={homeStyles.featureTitle}>Flexible Schedule</h3>
-            <p style={homeStyles.featureText}>
-              Open 24/7 to fit your busy lifestyle
-            </p>
+          <div style={homeStyles.footerCtaActions}>
+            <Link
+              to={user ? "/dashboard" : "/register"}
+              style={{
+                ...homeStyles.primaryButton,
+                backgroundColor: '#ffffff',
+                color: '#111111'
+              }}
+            >
+              {user ? "Go to Dashboard" : "Create account"}
+            </Link>
+            <Link to="/login" style={homeStyles.secondaryButton}>
+              I already have an account
+            </Link>
           </div>
         </div>
       </section>
     </div>
   );
 };
+
+const services = [
+  {
+    title: 'Personal Training',
+    description: '1-on-1 sessions with expert coaches, fully tailored to your goals.',
+    icon: '💪'
+  },
+  {
+    title: 'Group Classes',
+    description: 'High-energy classes including HIIT, yoga, cycling, and more.',
+    icon: '🔥'
+  },
+  {
+    title: 'Nutrition Coaching',
+    description: 'Meal planning and guidance to fuel your training the right way.',
+    icon: '🥗'
+  }
+];
+
+const plans = [
+  {
+    name: 'Basic',
+    price: 19,
+    features: ['Gym floor access', 'Locker room', 'Free Wi‑Fi'],
+    popular: false
+  },
+  {
+    name: 'Pro',
+    price: 39,
+    features: ['Everything in Basic', 'All classes included', 'Sauna & spa access'],
+    popular: true
+  },
+  {
+    name: 'Elite',
+    price: 69,
+    features: ['Personal trainer 2x/week', 'Priority support', 'Advanced analytics'],
+    popular: false
+  }
+];
+
+const trainers = [
+  {
+    name: 'Alex Morgan',
+    role: 'Strength & Conditioning Coach',
+    image:
+      'https://images.unsplash.com/photo-1554344058-8d1d1dbc5960?auto=format&fit=crop&w=700&q=80'
+  },
+  {
+    name: 'Sofia Lee',
+    role: 'Yoga & Mobility Specialist',
+    image:
+      'https://images.unsplash.com/photo-1517832207067-4db24a2ae47c?auto=format&fit=crop&w=700&q=80'
+  },
+  {
+    name: 'James Carter',
+    role: 'HIIT & Performance Trainer',
+    image:
+      'https://images.unsplash.com/photo-1546484959-f9a9ae384058?auto=format&fit=crop&w=700&q=80'
+  }
+];
+
+const testimonials = [
+  {
+    name: 'Emily R.',
+    meta: 'Member for 1 year',
+    quote:
+      'FitMaker completely changed how I feel about fitness. The trainers are supportive and the community is amazing.'
+  },
+  {
+    name: 'Daniel K.',
+    meta: 'Lost 12kg in 6 months',
+    quote:
+      'The combination of training and nutrition coaching made it easy to stay consistent and see real results.'
+  }
+];
+
+const blogs = [
+  {
+    title: '5 Warm‑up Routines to Boost Your Performance',
+    category: 'Training • 8 min read',
+    image:
+      'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=900&q=80'
+  },
+  {
+    title: 'How to Build a Sustainable Nutrition Plan',
+    category: 'Nutrition • 6 min read',
+    image:
+      'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=900&q=80'
+  },
+  {
+    title: 'Why Recovery Days Are Just as Important as Training',
+    category: 'Lifestyle • 5 min read',
+    image:
+      'https://images.unsplash.com/photo-1573878737225-95e33fea90f1?auto=format&fit=crop&w=900&q=80'
+  }
+];
+
+const faqs = [
+  {
+    q: 'Can I try the gym before committing?',
+    a: 'Yes, we offer a 3‑day free trial so you can explore the gym, join classes, and meet our trainers.'
+  },
+  {
+    q: 'Do you have personal trainers?',
+    a: 'We have certified personal trainers available for 1‑on‑1 and small group sessions, bookable via our dashboard.'
+  },
+  {
+    q: 'What are your opening hours?',
+    a: 'Our clubs are open 24/7, including weekends and holidays, so you can train whenever it fits your schedule.'
+  }
+];
 
 export default Home;
 

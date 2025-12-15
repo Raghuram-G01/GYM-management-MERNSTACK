@@ -28,10 +28,19 @@ const Contact = () => {
   };
 
   return (
-    <div style={contactStyles.container}>
-      <h1 style={contactStyles.title}>Contact Us</h1>
+    <div style={{
+      ...contactStyles.container,
+      animation: 'fadeIn 0.5s ease-in'
+    }}>
+      <h1 style={contactStyles.title}>Contact FitMaker</h1>
+      <p style={contactStyles.subtitle}>
+        Questions about memberships, classes, or trainers? Send us a note and we’ll
+        respond within one business day.
+      </p>
       <div style={contactStyles.content}>
-        <div style={contactStyles.formContainer}>
+        <div style={{
+          ...contactStyles.formContainer,
+        }}>
           <h2>Send us a message</h2>
           {submitted && (
             <p style={{ color: '#51cf66', marginBottom: '1rem' }}>
@@ -88,7 +97,9 @@ const Contact = () => {
             </button>
           </form>
         </div>
-        <div style={contactStyles.infoContainer}>
+        <div style={{
+          ...contactStyles.infoContainer,
+        }}>
           <h2>Get in Touch</h2>
           <div style={contactStyles.infoItem}>
             <div style={contactStyles.infoLabel}>Address</div>
@@ -111,4 +122,12 @@ const Contact = () => {
               Open 24/7<br />
               Every day of the year
             </div>
-        
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Contact;
+
