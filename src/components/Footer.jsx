@@ -13,7 +13,7 @@ const Footer = () => {
     }}>
       <div style={footerStyles.content}>
         <p style={footerStyles.text}>
-          © 2024 GYM Application. All rights reserved.
+          © 2025 GYM Application. All rights reserved.
         </p>
         <p style={footerStyles.text}>
           Built with React, Express, and MongoDB

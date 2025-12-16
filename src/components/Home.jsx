@@ -83,6 +83,17 @@ const Home = () => {
         <div style={homeStyles.cardGrid}>
           {services.map((service) => (
             <article key={service.title} style={homeStyles.serviceCard}>
+              <img
+                src={service.image}
+                alt={service.title}
+                style={{
+                  width: '100%',
+                  height: '200px',
+                  objectFit: 'cover',
+                  borderRadius: '12px',
+                  marginBottom: '16px'
+                }}
+              />
               <div style={homeStyles.serviceIcon}>{service.icon}</div>
               <h3 style={homeStyles.cardTitle}>{service.title}</h3>
               <p style={homeStyles.cardText}>{service.description}</p>
@@ -131,29 +142,6 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Trainers */}
-      <section style={homeStyles.section}>
-        <header style={homeStyles.sectionHeader}>
-          <p style={homeStyles.sectionBadge}>Our Trainers</p>
-          <h2 style={homeStyles.sectionTitle}>Meet your new fitness team.</h2>
-        </header>
-        <div style={homeStyles.cardGrid}>
-          {trainers.map((trainer) => (
-            <article key={trainer.name} style={homeStyles.trainerCard}>
-              <img
-                src={trainer.image}
-                alt={trainer.name}
-                style={homeStyles.trainerImage}
-              />
-              <div style={homeStyles.trainerInfo}>
-                <h3 style={homeStyles.cardTitle}>{trainer.name}</h3>
-                <p style={homeStyles.trainerRole}>{trainer.role}</p>
-              </div>
-            </article>
-          ))}
-        </div>
-      </section>
-
       {/* Testimonials */}
       <section style={homeStyles.section}>
         <header style={homeStyles.sectionHeader}>
@@ -179,17 +167,19 @@ const Home = () => {
         </header>
         <div style={homeStyles.cardGrid}>
           {blogs.map((post) => (
-            <article key={post.title} style={homeStyles.blogCard}>
-              <img
-                src={post.image}
-                alt={post.title}
-                style={homeStyles.blogImage}
-              />
-              <div style={homeStyles.blogBody}>
-                <p style={homeStyles.blogMeta}>{post.category}</p>
-                <h3 style={homeStyles.cardTitle}>{post.title}</h3>
-              </div>
-            </article>
+            <Link key={post.id} to={`/blog/${post.id}`} style={{ textDecoration: 'none' }}>
+              <article style={homeStyles.blogCard}>
+                <img
+                  src={post.image}
+                  alt={post.title}
+                  style={homeStyles.blogImage}
+                />
+                <div style={homeStyles.blogBody}>
+                  <p style={homeStyles.blogMeta}>{post.category}</p>
+                  <h3 style={homeStyles.cardTitle}>{post.title}</h3>
+                </div>
+              </article>
+            </Link>
           ))}
         </div>
       </section>
@@ -246,17 +236,20 @@ const services = [
   {
     title: 'Personal Training',
     description: '1-on-1 sessions with expert coaches, fully tailored to your goals.',
-    icon: '💪'
+    icon: '💪',
+    image: 'https://images.unsplash.com/photo-1549476464-37392f717541?auto=format&fit=crop&w=400&q=80'
   },
   {
     title: 'Group Classes',
     description: 'High-energy classes including HIIT, yoga, cycling, and more.',
-    icon: '🔥'
+    icon: '🔥',
+    image: 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=400&q=80'
   },
   {
     title: 'Nutrition Coaching',
     description: 'Meal planning and guidance to fuel your training the right way.',
-    icon: '🥗'
+    icon: '🥗',
+    image: 'https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&w=400&q=80'
   }
 ];
 
@@ -304,13 +297,13 @@ const trainers = [
 
 const testimonials = [
   {
-    name: 'Emily R.',
+    name: 'Priya S.',
     meta: 'Member for 1 year',
     quote:
       'FitMaker completely changed how I feel about fitness. The trainers are supportive and the community is amazing.'
   },
   {
-    name: 'Daniel K.',
+    name: 'Karthik R.',
     meta: 'Lost 12kg in 6 months',
     quote:
       'The combination of training and nutrition coaching made it easy to stay consistent and see real results.'
@@ -319,22 +312,18 @@ const testimonials = [
 
 const blogs = [
   {
+    id: 1,
     title: '5 Warm‑up Routines to Boost Your Performance',
     category: 'Training • 8 min read',
     image:
       'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=900&q=80'
   },
   {
+    id: 2,
     title: 'How to Build a Sustainable Nutrition Plan',
     category: 'Nutrition • 6 min read',
     image:
       'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=900&q=80'
-  },
-  {
-    title: 'Why Recovery Days Are Just as Important as Training',
-    category: 'Lifestyle • 5 min read',
-    image:
-      'https://images.unsplash.com/photo-1573878737225-95e33fea90f1?auto=format&fit=crop&w=900&q=80'
   }
 ];
 

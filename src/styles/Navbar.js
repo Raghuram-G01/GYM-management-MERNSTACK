@@ -1,6 +1,6 @@
 export const navbarStyles = {
   navbar: {
-    padding: '1rem 2rem',
+    padding: '1.5rem 2rem',
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -9,7 +9,8 @@ export const navbarStyles = {
     zIndex: 1000,
     backdropFilter: 'blur(10px)',
     transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-    animation: 'slideIn 0.4s ease-out'
+    animation: 'slideIn 0.4s ease-out',
+    minHeight: '80px'
   },
   inner: {
     maxWidth: '1200px',
@@ -17,7 +18,7 @@ export const navbarStyles = {
     margin: '0 auto',
     display: 'flex',
     alignItems: 'center',
-    gap: '1rem'
+    justifyContent: 'space-between'
   },
   logo: {
     fontSize: '1.5rem',

@@ -1,7 +1,7 @@
 export const homeStyles = {
   page: {
     minHeight: '100vh',
-    paddingTop: '96px',
+    paddingTop: '80px',
     fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Inter", sans-serif'
   },
 
@@ -9,7 +9,7 @@ export const homeStyles = {
   heroSection: {
     maxWidth: '1200px',
     margin: '0 auto',
-    padding: '24px 24px 64px',
+    padding: '0 24px 64px',
     display: 'grid',
     gridTemplateColumns: 'minmax(0, 1.1fr) minmax(0, 0.9fr)',
     gap: '56px',

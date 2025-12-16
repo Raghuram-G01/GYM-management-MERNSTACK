@@ -17,7 +17,8 @@ import Members from './components/Members.jsx';
 import Reports from './components/Reports.jsx';
 import Settings from './components/Settings.jsx';
 import Users from './components/Users.jsx';
-import ProtectedRoute from './components/ProtectedRoute.jsx';
+import AuthGuard from './components/AuthGuard.jsx';
+import BlogPost from './components/BlogPost.jsx';
 
 const App = () => {
   const appStyle = {
@@ -46,16 +47,17 @@ const App = () => {
               <Route path="/contact" element={<Contact />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
-              <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
-              <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+              <Route path="/dashboard" element={<AuthGuard><Dashboard /></AuthGuard>} />
+              <Route path="/profile" element={<AuthGuard><Profile /></AuthGuard>} />
               <Route path="/plans" element={<Plans />} />
-              <Route path="/workout" element={<ProtectedRoute allowedRoles={['member']}><Workout /></ProtectedRoute>} />
-              <Route path="/attendance" element={<ProtectedRoute><Attendance /></ProtectedRoute>} />
-              <Route path="/payments" element={<ProtectedRoute allowedRoles={['member', 'admin']}><Payments /></ProtectedRoute>} />
-              <Route path="/members" element={<ProtectedRoute allowedRoles={['trainer', 'admin']}><Members /></ProtectedRoute>} />
-              <Route path="/reports" element={<ProtectedRoute allowedRoles={['admin']}><Reports /></ProtectedRoute>} />
-              <Route path="/settings" element={<ProtectedRoute allowedRoles={['admin']}><Settings /></ProtectedRoute>} />
-              <Route path="/users" element={<ProtectedRoute allowedRoles={['admin']}><Users /></ProtectedRoute>} />
+              <Route path="/workout" element={<AuthGuard requiredRole="member"><Workout /></AuthGuard>} />
+              <Route path="/attendance" element={<AuthGuard><Attendance /></AuthGuard>} />
+              <Route path="/payments" element={<AuthGuard><Payments /></AuthGuard>} />
+              <Route path="/members" element={<AuthGuard requiredRole="trainer"><Members /></AuthGuard>} />
+              <Route path="/reports" element={<AuthGuard requiredRole="admin"><Reports /></AuthGuard>} />
+              <Route path="/settings" element={<AuthGuard requiredRole="admin"><Settings /></AuthGuard>} />
+              <Route path="/users" element={<AuthGuard requiredRole="admin"><Users /></AuthGuard>} />
+              <Route path="/blog/:id" element={<BlogPost />} />
             </Routes>
           </main>
           <Footer />

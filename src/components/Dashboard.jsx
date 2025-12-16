@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext.jsx';
 import { dashboardStyles } from '../styles/Dashboard.js';
+import MembershipStatus from './MembershipStatus.jsx';
 
 const Dashboard = () => {
   const [user, setUser] = useState(null);
@@ -26,11 +27,13 @@ const Dashboard = () => {
 
   return (
     <div style={dashboardStyles.page}>
+      <MembershipStatus user={user} />
+      
       {/* Header */}
       <header style={dashboardStyles.header}>
         <div>
           <p style={dashboardStyles.subhead}>Good Morning</p>
-          <h1 style={dashboardStyles.title}>Welcome Back, {user.name}! ({user.role.toUpperCase()}) 🎉</h1>
+          <h1 style={dashboardStyles.title}>Welcome Back, {user.name}! 🎉</h1>
           <p style={dashboardStyles.lead}>Track, fuel, and plan your fitness in one place.</p>
         </div>
         <div style={dashboardStyles.headerActions}>
