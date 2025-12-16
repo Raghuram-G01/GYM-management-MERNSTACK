@@ -130,3 +130,47 @@ export const getMe = async (req, res) => {
   }
 };
 
+// @desc    Create default admin
+// @route   POST /api/users/create-admin
+// @access  Public (one-time setup)
+export const createDefaultAdmin = async (req, res) => {
+  try {
+    // Check if admin already exists
+    const adminExists = await User.findOne({ role: 'admin' });
+    if (adminExists) {
+      return res.status(400).json({
+        success: false,
+        message: 'Admin already exists'
+      });
+    }
+
+    // Create default admin
+    const admin = await User.create({
+      name: 'Admin',
+      email: 'admin@gym.com',
+      password: 'admin123',
+      role: 'admin'
+    });
+
+    const token = signToken(admin);
+
+    res.status(201).json({
+      success: true,
+      message: 'Default admin created successfully',
+      data: {
+        id: admin._id,
+        name: admin.name,
+        email: admin.email,
+        role: admin.role,
+        token
+      }
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: 'Error creating admin',
+      error: error.message
+    });
+  }
+};
+
