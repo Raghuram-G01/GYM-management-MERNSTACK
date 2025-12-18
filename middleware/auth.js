@@ -56,6 +56,12 @@ export const activeMemberOnly = async (req, res, next) => {
     }
 
     const user = await User.findById(req.user.id);
+    
+    // Allow demo member to bypass membership check
+    if (user.email === 'kumar@demo.com') {
+      return next();
+    }
+    
     if (user.membershipStatus !== 'active') {
       return res.status(403).json({
         success: false,
