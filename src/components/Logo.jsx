@@ -1,7 +1,7 @@
 import { useTheme } from '../context/ThemeContext.jsx';
 import gymLogo from '../styles/gym.jpeg';
 
-const Logo = ({ size = 40 }) => {
+const Logo = ({ size = 100}) => {
   const logoStyle = {
     display: 'flex',
     alignItems: 'center',

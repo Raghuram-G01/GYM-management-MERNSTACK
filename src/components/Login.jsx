@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext.jsx';
 import { loginUser } from '../services/api.js';
 import { loginStyles } from '../styles/Login.js';
+import loginBg from '../styles/login_bg.jpeg';
 
 const Login = () => {
   const { colors } = useTheme();
@@ -52,12 +53,16 @@ const Login = () => {
   return (
     <div style={{
       ...loginStyles.container,
-      backgroundColor: colors.background,
+      backgroundImage: `url(${loginBg})`,
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+      backgroundRepeat: 'no-repeat',
       animation: 'fadeIn 0.5s ease-in'
     }}>
       <div style={{
         ...loginStyles.formContainer,
-        backgroundColor: colors.surface,
+        backgroundColor: `${colors.surface}CC`,
+        backdropFilter: 'blur(10px)',
         border: `1px solid ${colors.border}`,
         boxShadow: `0 4px 20px ${colors.shadow}`
       }}>

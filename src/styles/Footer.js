@@ -22,6 +22,14 @@ export const footerStyles = {
     '&:hover': {
       textDecoration: 'underline'
     }
+  },
+  '@media (max-width: 768px)': {
+    footer: {
+      padding: '20px 16px'
+    },
+    text: {
+      fontSize: '0.8rem'
+    }
   }
 };
 

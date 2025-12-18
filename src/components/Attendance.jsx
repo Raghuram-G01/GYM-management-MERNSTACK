@@ -1,34 +1,54 @@
+import { useState, useEffect } from 'react';
 import { useTheme } from '../context/ThemeContext.jsx';
+import { getUserAttendance, getTrainerAttendanceOverview } from '../services/api.js';
+import { getResponsiveStyles } from '../styles/responsive.js';
 
 const Attendance = () => {
   const { colors } = useTheme();
+  const responsive = getResponsiveStyles();
   const user = JSON.parse(localStorage.getItem('user') || 'null');
-  
-  // Generate attendance data for the last 365 days
-  const generateAttendanceData = () => {
-    const data = [];
-    const today = new Date();
-    
-    for (let i = 364; i >= 0; i--) {
-      const date = new Date(today);
-      date.setDate(date.getDate() - i);
-      
-      // Random attendance with higher probability on weekdays
-      const isWeekend = date.getDay() === 0 || date.getDay() === 6;
-      const attendanceChance = isWeekend ? 0.3 : 0.7;
-      const attended = Math.random() < attendanceChance;
-      
-      data.push({
-        date: date.toISOString().split('T')[0],
-        attended,
-        day: date.getDay(),
-        month: date.getMonth()
-      });
-    }
-    return data;
-  };
+  const [attendanceData, setAttendanceData] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const attendanceData = generateAttendanceData();
+  useEffect(() => {
+    fetchAttendance();
+  }, []);
+
+  const fetchAttendance = async () => {
+    try {
+      if (user?.role === 'trainer') {
+        const response = await getTrainerAttendanceOverview();
+        setAttendanceData(response.data || []);
+        setLoading(false);
+      } else {
+        const response = await getUserAttendance(user.id);
+        const attendanceMap = {};
+        response.data.forEach(record => {
+          const dateStr = new Date(record.date).toISOString().split('T')[0];
+          attendanceMap[dateStr] = record.status === 'present';
+        });
+
+        const data = [];
+        const today = new Date();
+        for (let i = 364; i >= 0; i--) {
+          const date = new Date(today);
+          date.setDate(date.getDate() - i);
+          const dateStr = date.toISOString().split('T')[0];
+          data.push({
+            date: dateStr,
+            attended: attendanceMap[dateStr] || false,
+            day: date.getDay(),
+            month: date.getMonth()
+          });
+        }
+        setAttendanceData(data);
+        setLoading(false);
+      }
+    } catch (error) {
+      console.error('Error fetching attendance:', error);
+      setLoading(false);
+    }
+  };
   const totalDays = attendanceData.length;
   const attendedDays = attendanceData.filter(d => d.attended).length;
   const currentStreak = getCurrentStreak(attendanceData);
@@ -77,17 +97,105 @@ const Attendance = () => {
   const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
   const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
+  if (loading) {
+    return <div style={{ padding: '32px', textAlign: 'center' }}>Loading...</div>;
+  }
+
+  // Trainer view - show members' attendance
+  if (user?.role === 'trainer') {
+    return (
+      <div style={{ ...responsive.container, color: colors.text }}>
+        <h1 style={responsive.heading}>Members Attendance Overview</h1>
+        <p style={responsive.subheading}>View attendance records of your assigned members</p>
+        
+        {attendanceData.length === 0 ? (
+          <div style={{ textAlign: 'center', padding: responsive.card.padding, backgroundColor: colors.surface, borderRadius: responsive.card.borderRadius }}>
+            <p style={{ fontSize: '1.2rem', opacity: 0.7 }}>No members assigned yet</p>
+          </div>
+        ) : (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: responsive.grid.gap }}>
+            {attendanceData.map((memberData) => {
+              const attendanceMap = {};
+              memberData.recentAttendance.forEach(record => {
+                const dateStr = new Date(record.date).toISOString().split('T')[0];
+                attendanceMap[dateStr] = record.status === 'present';
+              });
+
+              const heatmapData = [];
+              const today = new Date();
+              for (let i = 364; i >= 0; i--) {
+                const date = new Date(today);
+                date.setDate(date.getDate() - i);
+                const dateStr = date.toISOString().split('T')[0];
+                heatmapData.push({
+                  date: dateStr,
+                  attended: attendanceMap[dateStr] || false,
+                  day: date.getDay(),
+                  month: date.getMonth()
+                });
+              }
+
+              const attendedDays = heatmapData.filter(d => d.attended).length;
+              const totalDays = heatmapData.length;
+
+              return (
+                <div key={memberData.memberId} style={{
+                  backgroundColor: colors.surface,
+                  ...responsive.card,
+                  border: `1px solid ${colors.border}`
+                }}>
+                  <h3 style={{ fontSize: '1.5rem', marginBottom: '8px' }}>{memberData.memberName}</h3>
+                  <p style={{ opacity: 0.7, marginBottom: '16px' }}>{memberData.memberEmail}</p>
+                  
+                  <div style={{ display: 'flex', gap: '16px', marginBottom: '16px' }}>
+                    <div style={{ padding: '12px', backgroundColor: colors.background, borderRadius: '8px' }}>
+                      <div style={{ fontSize: '1.5rem', fontWeight: 'bold', color: colors.primary }}>
+                        {Math.round((attendedDays / totalDays) * 100)}%
+                      </div>
+                      <div style={{ fontSize: '0.8rem', opacity: 0.7 }}>Attendance Rate</div>
+                    </div>
+                    <div style={{ padding: '12px', backgroundColor: colors.background, borderRadius: '8px' }}>
+                      <div style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#10B981' }}>
+                        {attendedDays}
+                      </div>
+                      <div style={{ fontSize: '0.8rem', opacity: 0.7 }}>Days Present</div>
+                    </div>
+                  </div>
+
+                  <div style={{ fontSize: '0.9rem', opacity: 0.8 }}>Recent attendance (last 30 days)</div>
+                  <div style={{ display: 'flex', gap: '4px', marginTop: '8px', flexWrap: 'wrap' }}>
+                    {memberData.recentAttendance.slice(0, 30).map((record, idx) => (
+                      <div
+                        key={idx}
+                        title={`${new Date(record.date).toLocaleDateString()}: ${record.status}`}
+                        style={{
+                          width: '20px',
+                          height: '20px',
+                          backgroundColor: record.status === 'present' ? '#10B981' : '#EF4444',
+                          borderRadius: '4px'
+                        }}
+                      />
+                    ))}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  // Member view - show their own attendance
   return (
-    <div style={{ padding: '32px', color: colors.text, maxWidth: '1200px', margin: '0 auto' }}>
-      <h1 style={{ fontSize: '2.5rem', marginBottom: '8px' }}>
-        {user?.role === 'trainer' ? 'Member Attendance Overview' : 'My Attendance'}
-      </h1>
-      <p style={{ fontSize: '1.1rem', marginBottom: '32px', opacity: 0.8 }}>
-        {user?.role === 'trainer' ? 'Track member attendance patterns' : 'Track your gym attendance streak'}
-      </p>
+    <div style={{ ...responsive.container, color: colors.text }}>
+      <div style={{ marginBottom: responsive.subheading.marginBottom }}>
+        <h1 style={responsive.heading}>My Attendance</h1>
+        <p style={{ fontSize: responsive.subheading.fontSize, opacity: 0.8 }}>Track your gym attendance (marked by your trainer)</p>
+      </div>
 
       {/* Stats Cards */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '20px', marginBottom: '32px' }}>
+      <div style={{ ...responsive.statsGrid, marginBottom: responsive.subheading.marginBottom }}>
         <div style={{
           backgroundColor: colors.surface,
           padding: '20px',

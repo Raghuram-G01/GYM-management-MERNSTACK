@@ -1,9 +1,12 @@
 import { Link } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext.jsx';
 import { homeStyles } from '../styles/Home.js';
+import { getResponsiveStyles } from '../styles/responsive.js';
 
 const Home = () => {
   const { colors } = useTheme();
+  const responsive = getResponsiveStyles();
+  const isMobile = window.innerWidth <= 768;
   const user = JSON.parse(localStorage.getItem('user') || 'null');
 
   return (
@@ -15,7 +18,7 @@ const Home = () => {
       }}
     >
       {/* Hero Section */}
-      <section style={homeStyles.heroSection}>
+      <section style={{ ...homeStyles.heroSection, flexDirection: isMobile ? 'column' : 'row', padding: responsive.container.padding }}>
         <div style={homeStyles.heroContent}>
           <p style={homeStyles.heroBadge}>FITMAKER GYM • PREMIUM FITNESS CLUB</p>
           <h1 style={homeStyles.heroTitle}>

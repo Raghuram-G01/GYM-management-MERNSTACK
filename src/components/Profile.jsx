@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useTheme } from '../context/ThemeContext.jsx';
+import { profileStyles } from '../styles/Profile.js';
 
 const Profile = () => {
   const { colors } = useTheme();
@@ -52,40 +53,29 @@ const Profile = () => {
   };
 
   return (
-    <div style={{ padding: '32px', color: colors.text, maxWidth: '1000px', margin: '0 auto' }}>
-      <h1 style={{ fontSize: '2.5rem', marginBottom: '8px' }}>My Profile</h1>
-      <p style={{ fontSize: '1.1rem', marginBottom: '32px', opacity: 0.8 }}>
-        Manage your personal information and preferences
-      </p>
+    <div style={profileStyles.container}>
+      <div style={profileStyles.header}>
+        <h1 style={profileStyles.title}>My Profile</h1>
+        <p style={profileStyles.subtitle}>
+          Manage your personal information and preferences
+        </p>
+      </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: '32px' }}>
-        {/* Profile Image Section */}
-        <div style={{
-          backgroundColor: colors.surface,
-          padding: '24px',
-          borderRadius: '12px',
-          border: `1px solid ${colors.border}`,
-          textAlign: 'center',
-          height: 'fit-content'
-        }}>
-          <div style={{
-            width: '150px',
-            height: '150px',
-            borderRadius: '50%',
-            margin: '0 auto 20px',
-            backgroundColor: colors.background,
-            backgroundImage: profileImage ? `url(${profileImage})` : 'none',
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            border: `3px solid ${colors.primary}`,
-            fontSize: '3rem',
-            color: colors.primary
-          }}>
-            {!profileImage && (user?.name?.charAt(0) || '👤')}
-          </div>
+      <div style={profileStyles.profileCard}>
+        {/* Avatar Section */}
+        <div style={profileStyles.avatarSection}>
+          <div style={profileStyles.avatarContainer}>
+            <div style={{
+              ...profileStyles.avatar,
+              backgroundImage: profileImage ? `url(${profileImage})` : 'none',
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              fontSize: profileImage ? '0' : '3rem',
+              overflow: 'hidden',
+              border: '3px solid #F97316'
+            }}>
+              {!profileImage && (user?.name?.charAt(0)?.toUpperCase() || '👤')}
+            </div>
           
           <input
             type="file"
@@ -94,221 +84,97 @@ const Profile = () => {
             style={{ display: 'none' }}
             id="profile-upload"
           />
-          <label
-            htmlFor="profile-upload"
-            style={{
-              display: 'inline-block',
-              padding: '10px 20px',
-              backgroundColor: colors.primary,
-              color: 'white',
-              borderRadius: '8px',
-              cursor: 'pointer',
-              fontSize: '0.9rem'
-            }}
-          >
-            Upload Photo
-          </label>
-
-          <div style={{ marginTop: '24px', textAlign: 'left' }}>
-            <h3 style={{ marginBottom: '16px', color: colors.primary }}>Quick Stats</h3>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-              <div>
-                <strong>Role:</strong> {user?.role?.toUpperCase()}
-              </div>
-              <div>
-                <strong>Joining Date:</strong> {new Date(getJoiningDate()).toLocaleDateString()}
-              </div>
-              <div>
-                <strong>Status:</strong> {getMembershipStatus()}
-              </div>
-              <div>
-                <strong>Member ID:</strong> GYM{user?.id || '001'}
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Profile Information Section */}
-        <div style={{
-          backgroundColor: colors.surface,
-          padding: '24px',
-          borderRadius: '12px',
-          border: `1px solid ${colors.border}`
-        }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
-            <h3 style={{ fontSize: '1.5rem', color: colors.primary }}>Personal Information</h3>
-            <button
-              onClick={() => isEditing ? handleSave() : setIsEditing(true)}
-              style={{
-                padding: '8px 16px',
-                backgroundColor: isEditing ? '#10B981' : colors.primary,
-                color: 'white',
-                border: 'none',
-                borderRadius: '6px',
-                cursor: 'pointer'
-              }}
+            <label
+              htmlFor="profile-upload"
+              style={profileStyles.editAvatarButton}
             >
-              {isEditing ? 'Save' : 'Edit'}
-            </button>
+              📷
+            </label>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
-            <div>
-              <label style={{ display: 'block', marginBottom: '8px', fontWeight: '500' }}>Full Name</label>
-              <input
-                type="text"
-                name="name"
-                value={formData.name}
-                onChange={handleInputChange}
-                disabled={!isEditing}
-                style={{
-                  width: '100%',
-                  padding: '12px',
-                  border: `1px solid ${colors.border}`,
-                  borderRadius: '8px',
-                  backgroundColor: isEditing ? colors.background : colors.surface,
-                  color: colors.text
-                }}
-              />
+          <h2 style={profileStyles.userName}>{formData.name}</h2>
+          <p style={profileStyles.userRole}>{user?.role?.toUpperCase()}</p>
+        </div>
+
+        <div style={profileStyles.infoSection}>
+          <h3 style={profileStyles.sectionTitle}>Personal Information</h3>
+
+          <div style={profileStyles.infoGrid}>
+            <div style={profileStyles.info}>
+              <label style={profileStyles.label}>Full Name</label>
+              <div style={profileStyles.value}>
+                <span style={profileStyles.valueIcon}>👤</span>
+                {formData.name}
+              </div>
             </div>
 
-            <div>
-              <label style={{ display: 'block', marginBottom: '8px', fontWeight: '500' }}>Email</label>
-              <input
-                type="email"
-                name="email"
-                value={formData.email}
-                onChange={handleInputChange}
-                disabled={!isEditing}
-                style={{
-                  width: '100%',
-                  padding: '12px',
-                  border: `1px solid ${colors.border}`,
-                  borderRadius: '8px',
-                  backgroundColor: isEditing ? colors.background : colors.surface,
-                  color: colors.text
-                }}
-              />
+            <div style={profileStyles.info}>
+              <label style={profileStyles.label}>Email</label>
+              <div style={profileStyles.value}>
+                <span style={profileStyles.valueIcon}>✉️</span>
+                {formData.email}
+              </div>
             </div>
 
-            <div>
-              <label style={{ display: 'block', marginBottom: '8px', fontWeight: '500' }}>Phone</label>
-              <input
-                type="tel"
-                name="phone"
-                value={formData.phone}
-                onChange={handleInputChange}
-                disabled={!isEditing}
-                style={{
-                  width: '100%',
-                  padding: '12px',
-                  border: `1px solid ${colors.border}`,
-                  borderRadius: '8px',
-                  backgroundColor: isEditing ? colors.background : colors.surface,
-                  color: colors.text
-                }}
-              />
+            <div style={profileStyles.info}>
+              <label style={profileStyles.label}>Phone</label>
+              <div style={profileStyles.value}>
+                <span style={profileStyles.valueIcon}>📞</span>
+                {formData.phone}
+              </div>
             </div>
 
-            <div>
-              <label style={{ display: 'block', marginBottom: '8px', fontWeight: '500' }}>Emergency Contact</label>
-              <input
-                type="text"
-                name="emergencyContact"
-                value={formData.emergencyContact}
-                onChange={handleInputChange}
-                disabled={!isEditing}
-                style={{
-                  width: '100%',
-                  padding: '12px',
-                  border: `1px solid ${colors.border}`,
-                  borderRadius: '8px',
-                  backgroundColor: isEditing ? colors.background : colors.surface,
-                  color: colors.text
-                }}
-              />
+            <div style={profileStyles.info}>
+              <label style={profileStyles.label}>Emergency Contact</label>
+              <div style={profileStyles.value}>
+                <span style={profileStyles.valueIcon}>🆘</span>
+                {formData.emergencyContact}
+              </div>
             </div>
 
-            <div style={{ gridColumn: '1 / -1' }}>
-              <label style={{ display: 'block', marginBottom: '8px', fontWeight: '500' }}>Address</label>
-              <input
-                type="text"
-                name="address"
-                value={formData.address}
-                onChange={handleInputChange}
-                disabled={!isEditing}
-                style={{
-                  width: '100%',
-                  padding: '12px',
-                  border: `1px solid ${colors.border}`,
-                  borderRadius: '8px',
-                  backgroundColor: isEditing ? colors.background : colors.surface,
-                  color: colors.text
-                }}
-              />
+            <div style={profileStyles.info}>
+              <label style={profileStyles.label}>Address</label>
+              <div style={profileStyles.value}>
+                <span style={profileStyles.valueIcon}>📍</span>
+                {formData.address}
+              </div>
             </div>
 
-            <div style={{ gridColumn: '1 / -1' }}>
-              <label style={{ display: 'block', marginBottom: '8px', fontWeight: '500' }}>Fitness Goals</label>
-              <textarea
-                name="goals"
-                value={formData.goals}
-                onChange={handleInputChange}
-                disabled={!isEditing}
-                rows={3}
-                style={{
-                  width: '100%',
-                  padding: '12px',
-                  border: `1px solid ${colors.border}`,
-                  borderRadius: '8px',
-                  backgroundColor: isEditing ? colors.background : colors.surface,
-                  color: colors.text,
-                  resize: 'vertical'
-                }}
-              />
+            <div style={profileStyles.info}>
+              <label style={profileStyles.label}>Fitness Goals</label>
+              <div style={profileStyles.value}>
+                <span style={profileStyles.valueIcon}>🎯</span>
+                {formData.goals}
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      {/* Additional Actions */}
-      <div style={{
-        backgroundColor: colors.surface,
-        padding: '24px',
-        borderRadius: '12px',
-        border: `1px solid ${colors.border}`,
-        marginTop: '32px'
-      }}>
-        <h3 style={{ marginBottom: '16px', color: colors.primary }}>Account Actions</h3>
-        <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
-          <button style={{
-            padding: '12px 24px',
-            backgroundColor: 'transparent',
-            color: colors.primary,
-            border: `1px solid ${colors.primary}`,
-            borderRadius: '8px',
-            cursor: 'pointer'
-          }}>
+        {/* Stats Grid */}
+        <div style={profileStyles.statsGrid}>
+          <div style={profileStyles.statBox}>
+            <div style={profileStyles.statValue}>{user?.role?.toUpperCase()}</div>
+            <div style={profileStyles.statLabel}>Role</div>
+          </div>
+          <div style={profileStyles.statBox}>
+            <div style={profileStyles.statValue}>{new Date(getJoiningDate()).getFullYear()}</div>
+            <div style={profileStyles.statLabel}>Member Since</div>
+          </div>
+          <div style={profileStyles.statBox}>
+            <div style={{ ...profileStyles.statValue, fontSize: '1.2rem' }}>{user?.id?.slice(-4) || '001'}</div>
+            <div style={profileStyles.statLabel}>Member ID</div>
+          </div>
+        </div>
+
+        {/* Action Buttons */}
+        <div style={profileStyles.actions}>
+          <button style={{ ...profileStyles.button, ...profileStyles.primaryButton }}>
+            Edit Profile
+          </button>
+          <button style={{ ...profileStyles.button, ...profileStyles.secondaryButton }}>
             Change Password
           </button>
-          <button style={{
-            padding: '12px 24px',
-            backgroundColor: 'transparent',
-            color: colors.primary,
-            border: `1px solid ${colors.primary}`,
-            borderRadius: '8px',
-            cursor: 'pointer'
-          }}>
-            Download Data
-          </button>
-          <button style={{
-            padding: '12px 24px',
-            backgroundColor: '#EF4444',
-            color: 'white',
-            border: 'none',
-            borderRadius: '8px',
-            cursor: 'pointer'
-          }}>
+          <button style={{ ...profileStyles.button, ...profileStyles.dangerButton }}>
             Deactivate Account
           </button>
         </div>

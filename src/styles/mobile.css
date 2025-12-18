@@ -1,0 +1,117 @@
+/* Mobile Responsive Styles */
+
+@media (max-width: 768px) {
+  /* Global mobile adjustments */
+  body {
+    font-size: 14px;
+  }
+
+  /* Table responsiveness */
+  table {
+    font-size: 0.85rem;
+  }
+
+  table th,
+  table td {
+    padding: 8px !important;
+  }
+
+  /* Button adjustments */
+  button {
+    font-size: 0.9rem !important;
+    padding: 8px 16px !important;
+  }
+
+  /* Form inputs */
+  input,
+  select,
+  textarea {
+    font-size: 16px !important; /* Prevents zoom on iOS */
+  }
+
+  /* Modal adjustments */
+  [style*="position: fixed"] > div {
+    width: 95% !important;
+    max-width: 100% !important;
+    margin: 10px !important;
+  }
+
+  /* Heatmap adjustments */
+  [style*="gridTemplateColumns: repeat(53"] {
+    grid-template-columns: repeat(53, 8px) !important;
+    gap: 1px !important;
+  }
+
+  [style*="gridTemplateColumns: repeat(53"] > div {
+    width: 8px !important;
+    height: 8px !important;
+  }
+
+  /* Chart adjustments */
+  [style*="chartRow"] {
+    overflow-x: auto;
+  }
+
+  /* Hide overflow text */
+  .truncate-mobile {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Extra small devices */
+  body {
+    font-size: 13px;
+  }
+
+  h1 {
+    font-size: 1.5rem !important;
+  }
+
+  h2 {
+    font-size: 1.3rem !important;
+  }
+
+  h3 {
+    font-size: 1.1rem !important;
+  }
+
+  /* Smaller heatmap for very small screens */
+  [style*="gridTemplateColumns: repeat(53"] {
+    grid-template-columns: repeat(53, 6px) !important;
+  }
+
+  [style*="gridTemplateColumns: repeat(53"] > div {
+    width: 6px !important;
+    height: 6px !important;
+  }
+}
+
+/* Tablet adjustments */
+@media (min-width: 769px) and (max-width: 1024px) {
+  /* Grid adjustments for tablets */
+  [style*="gridTemplateColumns"] {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+/* Landscape mobile */
+@media (max-width: 768px) and (orientation: landscape) {
+  /* Reduce vertical spacing in landscape */
+  [style*="padding: 32px"] {
+    padding: 16px !important;
+  }
+}
+
+/* Touch-friendly adjustments */
+@media (hover: none) and (pointer: coarse) {
+  /* Increase touch targets */
+  button,
+  a,
+  [role="button"] {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}

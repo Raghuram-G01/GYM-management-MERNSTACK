@@ -1,73 +1,165 @@
+import { useState, useEffect } from 'react';
 import { useTheme } from '../context/ThemeContext.jsx';
+import api from '../services/api.js';
+import { membersStyles } from '../styles/Members.js';
 
 const Members = () => {
   const { colors } = useTheme();
-  
-  const members = [
-    { id: 1, name: 'Alice Brown', plan: 'Pro', joinDate: '2024-01-15', attendance: '85%' },
-    { id: 2, name: 'Bob Wilson', plan: 'Basic', joinDate: '2024-02-20', attendance: '72%' },
-    { id: 3, name: 'Carol Davis', plan: 'Elite', joinDate: '2024-03-10', attendance: '91%' },
-    { id: 4, name: 'David Miller', plan: 'Pro', joinDate: '2024-01-05', attendance: '78%' }
-  ];
+  const [members, setMembers] = useState([]);
+  const [selectedMember, setSelectedMember] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchMembers();
+    // Auto-refresh every 30 seconds to show new members
+    const interval = setInterval(fetchMembers, 30000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const fetchMembers = async () => {
+    try {
+      setLoading(true);
+      console.log('Fetching members...');
+      const response = await api.get('/admin/users');
+      console.log('API Response:', response.data);
+      
+      if (response.data && response.data.data) {
+        const memberUsers = response.data.data.filter(user => user.role === 'member');
+        console.log('Filtered members:', memberUsers);
+        setMembers(memberUsers);
+      } else {
+        console.log('No data in response');
+        setMembers([]);
+      }
+    } catch (error) {
+      console.error('Error fetching members:', error);
+      console.error('Error details:', error.response?.data);
+      setMembers([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleMarkAttendance = async (memberId) => {
+    alert('Attendance marked for member!');
+  };
 
   return (
-    <div style={{ padding: '32px', color: colors.text, maxWidth: '1200px', margin: '0 auto' }}>
-      <h1 style={{ fontSize: '2.5rem', marginBottom: '8px' }}>My Members</h1>
-      <p style={{ fontSize: '1.1rem', marginBottom: '32px', opacity: 0.8 }}>Track your assigned members' progress</p>
+    <div style={membersStyles.container}>
+      <div style={membersStyles.header}>
+        <h1 style={membersStyles.title}>All Members</h1>
+        <button 
+          onClick={fetchMembers}
+          style={membersStyles.addButton}
+        >
+          Refresh
+        </button>
+      </div>
       
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '24px' }}>
-        {members.map((member) => (
-          <div key={member.id} style={{
+      {loading ? (
+        <div style={{ textAlign: 'center', padding: '2rem' }}>
+          <p>Loading members...</p>
+        </div>
+      ) : members.length === 0 ? (
+        <div style={membersStyles.emptyState}>
+          <p>No members registered yet</p>
+        </div>
+      ) : (
+        <div style={membersStyles.membersGrid}>
+          {members.map((member) => (
+            <div key={member._id} style={membersStyles.memberCard}>
+              <div style={membersStyles.memberHeader}>
+                <div style={membersStyles.memberAvatar}>
+                  {member.name.charAt(0).toUpperCase()}
+                </div>
+                <div style={membersStyles.memberInfo}>
+                  <h3 style={membersStyles.memberName}>{member.name}</h3>
+                  <p style={membersStyles.memberEmail}>{member.email}</p>
+                </div>
+              </div>
+              <div style={membersStyles.memberDetails}>
+                <div style={membersStyles.memberDetail}>
+                  <span style={membersStyles.detailLabel}>Status</span>
+                  <span style={membersStyles.detailValue}>{member.membershipStatus || 'Active'}</span>
+                </div>
+                <div style={membersStyles.memberDetail}>
+                  <span style={membersStyles.detailLabel}>Joined</span>
+                  <span style={membersStyles.detailValue}>{new Date(member.createdAt).toLocaleDateString()}</span>
+                </div>
+              </div>
+              <div style={membersStyles.memberActions}>
+                <button 
+                  onClick={() => handleMarkAttendance(member._id)}
+                  style={membersStyles.editButton}
+                >
+                  Mark Attendance
+                </button>
+                <button 
+                  onClick={() => setSelectedMember(member)}
+                  style={membersStyles.deleteButton}
+                >
+                  View Details
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {selectedMember && (
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundColor: 'rgba(0,0,0,0.7)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          zIndex: 1000
+        }} onClick={() => setSelectedMember(null)}>
+          <div style={{
             backgroundColor: colors.surface,
-            border: `1px solid ${colors.border}`,
+            padding: '32px',
             borderRadius: '12px',
-            padding: '24px',
-            boxShadow: `0 4px 12px ${colors.shadow}`
-          }}>
-            <h3 style={{ fontSize: '1.5rem', marginBottom: '16px' }}>{member.name}</h3>
-            <div style={{ marginBottom: '12px' }}>
-              <strong>Plan:</strong> {member.plan}
+            maxWidth: '600px',
+            width: '90%',
+            maxHeight: '80vh',
+            overflow: 'auto'
+          }} onClick={(e) => e.stopPropagation()}>
+            <h2 style={{ marginBottom: '24px', fontSize: responsive.heading.fontSize }}>{selectedMember.name}'s Profile</h2>
+            <div style={{ marginBottom: '16px' }}>
+              <strong>Email:</strong> {selectedMember.email}
             </div>
-            <div style={{ marginBottom: '12px' }}>
-              <strong>Join Date:</strong> {member.joinDate}
+            <div style={{ marginBottom: '16px' }}>
+              <strong>Membership Status:</strong> {selectedMember.membershipStatus}
             </div>
-            <div style={{ marginBottom: '20px' }}>
-              <strong>Attendance:</strong> 
-              <span style={{ 
-                color: parseInt(member.attendance) > 80 ? '#10B981' : '#EF4444',
-                fontWeight: 'bold',
-                marginLeft: '8px'
-              }}>
-                {member.attendance}
-              </span>
+            <div style={{ marginBottom: '16px' }}>
+              <strong>Total Attendance:</strong> {selectedMember.totalAttendance || 0} days
             </div>
-            <div style={{ display: 'flex', gap: '8px' }}>
-              <button style={{
-                flex: 1,
-                padding: '10px',
+            <div style={{ marginBottom: '16px' }}>
+              <strong>Attendance Rate:</strong> {selectedMember.attendanceRate || 0}%
+            </div>
+            <div style={{ marginBottom: '16px' }}>
+              <strong>Joined:</strong> {new Date(selectedMember.createdAt).toLocaleDateString()}
+            </div>
+            <button 
+              onClick={() => setSelectedMember(null)}
+              style={{
+                padding: '10px 24px',
                 backgroundColor: colors.primary,
                 color: 'white',
                 border: 'none',
                 borderRadius: '6px',
-                cursor: 'pointer'
+                cursor: 'pointer',
+                marginTop: '16px'
               }}>
-                View Progress
-              </button>
-              <button style={{
-                flex: 1,
-                padding: '10px',
-                backgroundColor: 'transparent',
-                color: colors.primary,
-                border: `1px solid ${colors.primary}`,
-                borderRadius: '6px',
-                cursor: 'pointer'
-              }}>
-                Schedule Session
-              </button>
-            </div>
+              Close
+            </button>
           </div>
-        ))}
-      </div>
+        </div>
+      )}
     </div>
   );
 };

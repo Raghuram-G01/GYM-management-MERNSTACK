@@ -4,6 +4,10 @@ export const loginStyles = {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundImage: 'url(/login_bg.jpg)',
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    backgroundRepeat: 'no-repeat',
     backgroundColor: '#0F1629',
     padding: '2.5rem'
   },
@@ -78,6 +82,25 @@ export const loginStyles = {
     textDecoration: 'none',
     '&:hover': {
       textDecoration: 'underline'
+    }
+  },
+  '@media (max-width: 768px)': {
+    container: {
+      padding: '1.5rem'
+    },
+    formContainer: {
+      padding: '2rem'
+    }
+  },
+  '@media (max-width: 480px)': {
+    container: {
+      padding: '1rem'
+    },
+    formContainer: {
+      padding: '1.5rem'
+    },
+    title: {
+      fontSize: '1.8rem'
     }
   }
 };

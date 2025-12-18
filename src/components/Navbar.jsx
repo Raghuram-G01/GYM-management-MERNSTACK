@@ -59,7 +59,6 @@ const Navbar = () => {
     { to: '/dashboard', label: 'Dashboard' },
     { to: '/workout', label: 'Workout' },
     { to: '/attendance', label: 'Attendance' },
-    { to: '/payments', label: 'Payments' },
     { to: '/profile', label: 'Profile' }
   ];
 
@@ -125,14 +124,16 @@ const Navbar = () => {
             }
           }}
         >
-          <Logo size={40} />
+          <Logo size={80} />
         </Link>
         
         <button
           style={{
             ...navbarStyles.mobileMenuButton,
             color: colors.text,
-            display: isMobile ? 'block' : 'none'
+            display: isMobile ? 'block' : 'none',
+            border: `2px solid #8B5CF6`,
+            borderRadius: '8px'
           }}
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           onMouseEnter={(e) => e.target.style.backgroundColor = colors.surfaceElevated}
@@ -193,7 +194,8 @@ const Navbar = () => {
                 style={{
                   ...navbarStyles.navLink,
                   background: 'none',
-                  border: 'none',
+                  border: `1px solid #8B5CF6`,
+                  borderRadius: '6px',
                   cursor: 'pointer',
                   color: colors.text
                 }}
@@ -209,7 +211,7 @@ const Navbar = () => {
                 ...navbarStyles.themeToggle,
                 backgroundColor: colors.surfaceElevated,
                 color: colors.text,
-                border: `1px solid ${colors.border}`
+                border: `1px solid #8B5CF6`
               }}
               onMouseEnter={(e) => {
                 e.target.style.transform = 'scale(1.1) rotate(180deg)';

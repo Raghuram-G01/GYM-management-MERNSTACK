@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App.jsx';
+import './styles/mobile.css';
 
 // Global styles with theme support
 const style = document.createElement('style');
@@ -96,11 +97,35 @@ style.textContent = `
       background-position: 200% 0;
     }
   }
+
+  /* Viewport meta for mobile */
+  html {
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+  }
+
+  /* Smooth scrolling */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Prevent horizontal scroll */
+  body {
+    overflow-x: hidden;
+  }
 `;
 document.head.appendChild(style);
 
 // Set default theme
 document.documentElement.setAttribute('data-theme', 'dark');
+
+// Add viewport meta tag if not present
+if (!document.querySelector('meta[name="viewport"]')) {
+  const meta = document.createElement('meta');
+  meta.name = 'viewport';
+  meta.content = 'width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes';
+  document.head.appendChild(meta);
+}
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>

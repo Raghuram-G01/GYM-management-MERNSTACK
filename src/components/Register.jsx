@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext.jsx';
 import { registerUser } from '../services/api.js';
 import { registerStyles } from '../styles/Register.js';
+import loginBg from '../styles/login_bg.jpeg';
 
 const Register = () => {
   const { colors } = useTheme();
@@ -53,12 +54,16 @@ const Register = () => {
   return (
     <div style={{
       ...registerStyles.container,
-      backgroundColor: colors.background,
+      backgroundImage: `url(${loginBg})`,
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+      backgroundRepeat: 'no-repeat',
       animation: 'fadeIn 0.5s ease-in'
     }}>
       <div style={{
         ...registerStyles.formContainer,
-        backgroundColor: colors.surface,
+        backgroundColor: `${colors.surface}CC`,
+        backdropFilter: 'blur(10px)',
         border: `1px solid ${colors.border}`,
         boxShadow: `0 4px 20px ${colors.shadow}`
       }}>
@@ -125,7 +130,6 @@ const Register = () => {
             >
               <option value="member">Member</option>
               <option value="trainer">Trainer</option>
-              <option value="admin">Admin</option>
             </select>
           </div>
           <button

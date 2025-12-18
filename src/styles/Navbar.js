@@ -83,6 +83,28 @@ export const navbarStyles = {
     alignItems: 'center',
     gap: '0.35rem',
     boxShadow: '0 10px 25px rgba(0,0,0,0.12)'
+  },
+  '@media (max-width: 768px)': {
+    navbar: {
+      padding: '1rem 1.5rem'
+    },
+    navLinks: {
+      display: 'none'
+    },
+    mobileMenuButton: {
+      display: 'block'
+    },
+    logo: {
+      fontSize: '1.3rem'
+    }
+  },
+  '@media (max-width: 480px)': {
+    navbar: {
+      padding: '0.8rem 1rem'
+    },
+    logo: {
+      fontSize: '1.2rem'
+    }
   }
 };
 

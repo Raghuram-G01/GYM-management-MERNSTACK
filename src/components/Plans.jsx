@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useTheme } from '../context/ThemeContext.jsx';
 import { Link } from 'react-router-dom';
+import { plansStyles } from '../styles/Plans.js';
 
 const Plans = () => {
   const { colors } = useTheme();
@@ -93,73 +94,48 @@ const Plans = () => {
   };
   
   return (
-    <div style={{ padding: '32px', color: colors.text, maxWidth: '1200px', margin: '0 auto' }}>
-      <h1 style={{ fontSize: '2.5rem', marginBottom: '8px' }}>{content.title}</h1>
-      <p style={{ fontSize: '1.1rem', marginBottom: '32px', opacity: 0.8 }}>{content.description}</p>
+    <div style={plansStyles.container}>
+      <div style={plansStyles.header}>
+        <h1 style={plansStyles.title}>{content.title}</h1>
+        <p style={plansStyles.subtitle}>{content.description}</p>
+      </div>
       
       {user?.role === 'admin' && (
-        <button
-          onClick={() => setShowAddForm(true)}
-          style={{
-            padding: '12px 24px',
-            backgroundColor: colors.primary,
-            color: 'white',
-            border: 'none',
-            borderRadius: '8px',
-            cursor: 'pointer',
-            marginBottom: '24px'
-          }}
-        >
-          + Add New Plan
-        </button>
+        <div style={plansStyles.adminActions}>
+          <button
+            onClick={() => setShowAddForm(true)}
+            style={{ ...plansStyles.button, ...plansStyles.primaryButton }}
+          >
+            + Add New Plan
+          </button>
+        </div>
       )}
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '24px' }}>
+      <div style={plansStyles.plansGrid}>
         {currentPlans.map((plan, index) => (
-          <div key={plan.id || index} style={{
-            backgroundColor: colors.surface,
-            border: `1px solid ${colors.border}`,
-            borderRadius: '12px',
-            padding: '24px',
-            boxShadow: `0 4px 12px ${colors.shadow}`
-          }}>
-            <h3 style={{ fontSize: '1.5rem', marginBottom: '8px' }}>{plan.name}</h3>
-            <p style={{ fontSize: '2rem', fontWeight: 'bold', color: colors.primary, marginBottom: '16px' }}>
+          <div key={plan.id || index} style={plansStyles.planCard}>
+            <h3 style={plansStyles.planName}>{plan.name}</h3>
+            <p style={plansStyles.planPrice}>
               {plan.price}
             </p>
-            <ul style={{ listStyle: 'none', padding: 0, marginBottom: '24px' }}>
+            <ul style={plansStyles.planFeatures}>
               {plan.features.map((feature, i) => (
-                <li key={i} style={{ padding: '8px 0', borderBottom: `1px solid ${colors.border}` }}>
+                <li key={i} style={plansStyles.planFeature}>
                   ✓ {feature}
                 </li>
               ))}
             </ul>
             {user?.role === 'admin' ? (
-              <div style={{ display: 'flex', gap: '8px' }}>
+              <div style={plansStyles.planActions}>
                 <button
                   onClick={() => handleEdit(plan.id)}
-                  style={{
-                    flex: 1,
-                    padding: '12px',
-                    backgroundColor: colors.primary,
-                    color: 'white',
-                    border: 'none',
-                    borderRadius: '8px',
-                    cursor: 'pointer'
-                  }}
+                  style={{ ...plansStyles.button, ...plansStyles.editButton }}
                 >
                   Edit
                 </button>
                 <button
                   onClick={() => handleDelete(plan.id)}
-                  style={{
-                    padding: '12px',
-                    backgroundColor: '#EF4444',
-                    color: 'white',
-                    border: 'none',
-                    borderRadius: '8px',
-                    cursor: 'pointer'
-                  }}
+                  style={{ ...plansStyles.button, ...plansStyles.deleteButton }}
                 >
                   Delete
                 </button>
@@ -190,26 +166,8 @@ const Plans = () => {
 
       {/* Edit Plan Modal */}
       {editingPlan && (
-        <div style={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          backgroundColor: 'rgba(0,0,0,0.5)',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          zIndex: 1000
-        }}>
-          <div style={{
-            backgroundColor: colors.surface,
-            padding: '32px',
-            borderRadius: '12px',
-            width: '500px',
-            maxHeight: '80vh',
-            overflow: 'auto'
-          }}>
+        <div style={plansStyles.modal}>
+          <div style={plansStyles.modalContent}>
             <h3 style={{ marginBottom: '20px' }}>Edit Plan</h3>
             <input
               value={editingPlan.name}
