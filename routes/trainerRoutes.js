@@ -5,9 +5,10 @@ import {
   getTrainer,
   updateTrainer,
   deleteTrainer,
-  loginTrainer
+  loginTrainer,
+  getTrainerStats
 } from '../controllers/trainerController.js';
-import { protect, adminOnly } from '../middleware/auth.js';
+import { protect, adminOnly, authorize } from '../middleware/auth.js';
 
 const router = express.Router();
 
@@ -20,5 +21,8 @@ router.get('/', protect, adminOnly, getAllTrainers);
 router.get('/:id', protect, getTrainer);
 router.put('/:id', protect, adminOnly, updateTrainer);
 router.delete('/:id', protect, adminOnly, deleteTrainer);
+
+// Trainer dashboard route
+router.get('/dashboard/stats', protect, authorize('trainer'), getTrainerStats);
 
 export default router;

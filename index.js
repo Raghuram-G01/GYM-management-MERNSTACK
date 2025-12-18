@@ -4,6 +4,11 @@ import cors from 'cors';
 import connectDB from './config/db.js';
 import userRoutes from './routes/userRoutes.js';
 import trainerRoutes from './routes/trainerRoutes.js';
+import memberTrainerRoutes from './routes/memberTrainerRoutes.js';
+import memberRoutes from './routes/memberRoutes.js';
+import adminRoutes from './routes/adminRoutes.js';
+import attendanceRoutes from './routes/attendanceRoutes.js';
+import membershipRoutes from './routes/membershipRoutes.js';
 
 dotenv.config();
 
@@ -21,6 +26,11 @@ connectDB();
 // Routes
 app.use('/api/users', userRoutes);
 app.use('/api/trainers', trainerRoutes);
+app.use('/api/trainer', memberTrainerRoutes);
+app.use('/api/member', memberRoutes);
+app.use('/api/admin', adminRoutes);
+app.use('/api/attendance', attendanceRoutes);
+app.use('/api/membership', membershipRoutes);
 
 // Health check route
 app.get('/', (req, res) => {

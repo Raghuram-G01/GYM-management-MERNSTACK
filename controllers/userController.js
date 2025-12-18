@@ -32,7 +32,49 @@ export const registerUser = async (req, res) => {
       });
     }
 
-    // Create user
+    // If role is trainer, create in Trainer collection
+    if (role === 'trainer') {
+      const Trainer = (await import('../models/Trainer.js')).default;
+      
+      const trainerExists = await Trainer.findOne({ email });
+      if (trainerExists) {
+        return res.status(400).json({
+          success: false,
+          message: 'Trainer already exists with this email'
+        });
+      }
+
+      const trainer = await Trainer.create({
+        name,
+        email,
+        password,
+        phone: '+91 0000000000',
+        specialization: 'General Fitness',
+        experience: 1,
+        certification: 'Certified Personal Trainer',
+        salary: 30000
+      });
+
+      const token = jwt.sign(
+        { id: trainer._id, role: 'trainer' },
+        process.env.JWT_SECRET || 'devsecret',
+        { expiresIn: '7d' }
+      );
+
+      return res.status(201).json({
+        success: true,
+        message: 'Trainer registered successfully',
+        data: {
+          id: trainer._id,
+          name: trainer.name,
+          email: trainer.email,
+          role: 'trainer',
+          token
+        }
+      });
+    }
+
+    // Create regular user (member)
     const user = await User.create({ name, email, password, role });
     const token = signToken(user);
 

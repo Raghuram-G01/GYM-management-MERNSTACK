@@ -6,7 +6,9 @@
   "type": "module",
   "scripts": {
     "start": "node index.js",
-    "dev": "node --watch index.js"
+    "dev": "node --watch index.js",
+    "create-admin": "node scripts/createSuperAdmin.js",
+    "test-trainer": "node scripts/testTrainer.js"
   },
   "keywords": [],
   "author": "",

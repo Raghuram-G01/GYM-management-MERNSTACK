@@ -24,6 +24,19 @@ const userSchema = new mongoose.Schema({
     type: String,
     enum: ['member', 'trainer', 'admin'],
     default: 'member'
+  },
+  assignedTrainer: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Trainer'
+  },
+  membershipStatus: {
+    type: String,
+    enum: ['pending_payment', 'payment_completed', 'approved', 'active', 'inactive', 'suspended', 'expired'],
+    default: 'pending_payment'
+  },
+  currentMembership: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Membership'
   }
 }, {
   timestamps: true

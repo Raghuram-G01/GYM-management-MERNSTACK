@@ -1,5 +1,8 @@
 import jwt from 'jsonwebtoken';
 import Trainer from '../models/Trainer.js';
+import User from '../models/User.js';
+import WorkoutPlan from '../models/WorkoutPlan.js';
+import Progress from '../models/Progress.js';
 
 const signToken = (trainer) => {
   const payload = { id: trainer._id, role: 'trainer' };
@@ -219,6 +222,45 @@ export const loginTrainer = async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Error logging in',
+      error: error.message
+    });
+  }
+};
+
+// @desc    Get trainer dashboard stats
+// @route   GET /api/trainers/dashboard/stats
+// @access  Private/Trainer
+export const getTrainerStats = async (req, res) => {
+  try {
+    const trainerId = req.user.id;
+    
+    const membersCount = await User.countDocuments({ 
+      assignedTrainer: trainerId,
+      role: 'member' 
+    });
+    
+    const activeWorkoutPlans = await WorkoutPlan.countDocuments({
+      trainerId,
+      status: 'active'
+    });
+    
+    const recentProgress = await Progress.find({ trainerId })
+      .populate('memberId', 'name')
+      .sort({ date: -1 })
+      .limit(5);
+    
+    res.status(200).json({
+      success: true,
+      data: {
+        membersCount,
+        activeWorkoutPlans,
+        recentProgress
+      }
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: 'Error fetching trainer stats',
       error: error.message
     });
   }
