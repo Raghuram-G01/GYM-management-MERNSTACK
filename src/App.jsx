@@ -19,6 +19,7 @@ import Reports from './components/Reports.jsx';
 import Settings from './components/Settings.jsx';
 import Users from './components/Users.jsx';
 import AuthGuard from './components/AuthGuard.jsx';
+import MembershipGuard from './components/MembershipGuard.jsx';
 import BlogPost from './components/BlogPost.jsx';
 
 const App = () => {
@@ -48,11 +49,11 @@ const App = () => {
               <Route path="/contact" element={<Contact />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
-              <Route path="/dashboard" element={<AuthGuard><Dashboard /></AuthGuard>} />
+              <Route path="/dashboard" element={<AuthGuard><MembershipGuard><Dashboard /></MembershipGuard></AuthGuard>} />
               <Route path="/profile" element={<AuthGuard><Profile /></AuthGuard>} />
               <Route path="/plans" element={<Plans />} />
-              <Route path="/workout" element={<AuthGuard requiredRole="member"><Workout /></AuthGuard>} />
-              <Route path="/attendance" element={<AuthGuard><Attendance /></AuthGuard>} />
+              <Route path="/workout" element={<AuthGuard requiredRole="member"><MembershipGuard><Workout /></MembershipGuard></AuthGuard>} />
+              <Route path="/attendance" element={<AuthGuard><MembershipGuard><Attendance /></MembershipGuard></AuthGuard>} />
               <Route path="/payments" element={<AuthGuard><Payments /></AuthGuard>} />
               <Route path="/members" element={<AuthGuard requiredRole="trainer"><Members /></AuthGuard>} />
               <Route path="/reports" element={<AuthGuard requiredRole="admin"><Reports /></AuthGuard>} />

@@ -37,6 +37,13 @@ const Login = () => {
       if (response.success) {
         setSuccess(response.message);
         localStorage.setItem('user', JSON.stringify(response.data));
+        
+        // Direct redirect for demo account
+        if (formData.email === 'kumar@demo.com') {
+          navigate('/dashboard');
+          return;
+        }
+        
         setTimeout(() => {
           navigate('/dashboard');
         }, 800);
